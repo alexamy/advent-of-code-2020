@@ -1,16 +1,7 @@
-use std::fs;
+use super::input;
 
 pub fn solve() -> u32 {
-    let directory = env!("CARGO_MANIFEST_DIR");
-    let input_path = format!("{directory}/input.txt");
-    let input = fs::read_to_string(input_path)
-        .expect("No input file found");
-
-    let numbers: Vec<u32> = input
-        .split("\n")
-        .filter(|r| !r.is_empty())
-        .map(|n| n.parse().unwrap())
-        .collect();
+    let numbers = input::get_data();
 
     for number in &numbers {
         let target = 2020 - number;

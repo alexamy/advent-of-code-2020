@@ -1,3 +1,4 @@
+mod input;
 mod first;
 mod second;
 
