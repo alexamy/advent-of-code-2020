@@ -5,7 +5,7 @@ fn main() {
     let input = fs::read_to_string(input_path)
         .expect("No input file found");
 
-    let numbers: Vec<i16> = input
+    let numbers: Vec<u16> = input
         .split("\n")
         .filter(|r| !r.is_empty())
         .map(|n| n.parse().unwrap())
