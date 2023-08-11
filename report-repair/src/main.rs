@@ -5,7 +5,8 @@ fn main() {
 }
 
 fn solve_first() -> u32 {
-    let input_path = env!("CARGO_MANIFEST_DIR").to_owned() + "/input.txt";
+    let directory = env!("CARGO_MANIFEST_DIR");
+    let input_path = format!("{directory}/input.txt");
     let input = fs::read_to_string(input_path)
         .expect("No input file found");
 
