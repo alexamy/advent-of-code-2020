@@ -1,7 +1,10 @@
 use std::fs;
 
 pub fn get_data() -> Vec<u32> {
-  process(read())
+  let content = read();
+  let value = process(&content);
+
+  value
 }
 
 fn read() -> String {
@@ -13,7 +16,7 @@ fn read() -> String {
   input
 }
 
-fn process(input: String) -> Vec<u32> {
+fn process(input: &str) -> Vec<u32> {
   input
     .split("\n")
     .filter(|r| !r.is_empty())
