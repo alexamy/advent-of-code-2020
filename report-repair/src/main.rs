@@ -1,10 +1,10 @@
 use std::fs;
 
 fn main() {
-    println!("Hello, world!");
+    println!("First solution: {}", solve_first());
 }
 
-fn solve() -> u32 {
+fn solve_first() -> u32 {
     let input_path = env!("CARGO_MANIFEST_DIR").to_owned() + "/input.txt";
     let input = fs::read_to_string(input_path)
         .expect("No input file found");
@@ -33,6 +33,6 @@ mod tests {
 
     #[test]
     fn first_solution() {
-        assert_eq!(solve(), 902451);
+        assert_eq!(solve_first(), 902451);
     }
 }
