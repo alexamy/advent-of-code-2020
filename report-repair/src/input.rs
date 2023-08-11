@@ -14,11 +14,9 @@ fn read() -> String {
 }
 
 fn process(input: String) -> Vec<u32> {
-  let numbers: Vec<u32> = input
+  input
     .split("\n")
     .filter(|r| !r.is_empty())
-    .map(|n| n.parse().unwrap())
-    .collect();
-
-  numbers
+    .map(|n| n.parse::<u32>().unwrap())
+    .collect()
 }
