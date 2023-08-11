@@ -23,3 +23,13 @@ pub fn solve() -> u32 {
 
     panic!("No solution found");
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn is_solved() {
+        assert_eq!(solve(), 902451);
+    }
+}
