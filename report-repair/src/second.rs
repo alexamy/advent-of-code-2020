@@ -1,14 +1,19 @@
 use super::input;
 
 pub fn solve() -> u32 {
-    let numbers = input::get_data();
+    let mut numbers = input::get_data();
+    numbers.sort();
 
     for number in &numbers {
-        let target = 2020 - number;
-        let is_target = numbers.contains(&target);
-        if is_target {
-            let result = number * target;
-            return result;
+        let candidates: Vec<u32> = numbers
+            .to_vec()
+            .iter()
+            .map(|n| *n)
+            .filter(|n| number + n < 2020)
+            .collect();
+
+        if candidates.len() < 2 {
+            continue;
         }
     };
 
