@@ -7,6 +7,19 @@ pub struct Rule {
   letter: char,
 }
 
+impl Rule {
+  fn check(&self, password: &str) -> bool {
+    let chars: Vec<char> = password
+      .chars()
+      .filter(|letter| *letter == self.letter)
+      .collect();
+
+    let count = chars.len() as u8;
+
+    count >= self.low_bound && count <= self.high_bound
+  }
+}
+
 pub type Row = (String, Rule);
 
 pub fn get_data() -> Vec<Row> {
@@ -78,6 +91,19 @@ mod tests {
         high_bound: 14,
         letter: 'p',
       }),
-    )
+    );
+  }
+
+  #[test]
+  fn rule_allows_password() {
+    let rule = Rule {
+      low_bound: 2,
+      high_bound: 4,
+      letter: 'p',
+    };
+
+    assert_eq!(rule.check("appx"), true);
+    assert_eq!(rule.check("apppx"), true);
+    assert_eq!(rule.check("appppx"), true);
   }
 }
