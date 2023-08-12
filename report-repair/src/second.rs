@@ -5,16 +5,12 @@ pub fn solve() -> u32 {
     numbers.sort();
 
     for number in &numbers {
-        let candidates: Vec<u32> = numbers
-            .to_vec()
-            .iter()
-            .map(|n| *n)
-            .filter(|n| number + n < 2020)
-            .collect();
-
-        if candidates.len() < 2 {
+        let candidates = find_candidates(number, &numbers);
+        if let None = candidates {
             continue;
         }
+
+        let candidates = candidates.unwrap();
 
         for c1 in &candidates {
             for c2 in &candidates {
@@ -28,6 +24,21 @@ pub fn solve() -> u32 {
     };
 
     panic!("No solution found");
+}
+
+fn find_candidates(number: &u32, numbers: &Vec<u32>) -> Option<Vec<u32>> {
+    let candidates: Vec<u32> = numbers
+        .to_vec()
+        .iter()
+        .map(|n| *n)
+        .filter(|n| number + n < 2020)
+        .collect();
+
+    if candidates.len() < 2 {
+        return None;
+    }
+
+    return Some(candidates);
 }
 
 
