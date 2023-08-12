@@ -106,4 +106,17 @@ mod tests {
     assert_eq!(rule.check("apppx"), true);
     assert_eq!(rule.check("appppx"), true);
   }
+
+  #[test]
+  fn rule_disallows_password() {
+    let rule = Rule {
+      low_bound: 2,
+      high_bound: 4,
+      letter: 'p',
+    };
+
+    assert_eq!(rule.check("ax"), false);
+    assert_eq!(rule.check("apx"), false);
+    assert_eq!(rule.check("apppppx"), false);
+  }
 }
