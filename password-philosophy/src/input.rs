@@ -2,8 +2,8 @@ use std::fs;
 
 #[derive(PartialEq, Debug)]
 pub struct Rule {
-  low_bound: u8,
-  high_bound: u8,
+  low_bound: usize,
+  high_bound: usize,
   letter: char,
 }
 
@@ -14,7 +14,7 @@ impl Rule {
       .filter(|letter| *letter == self.letter)
       .collect();
 
-    let count = chars.len() as u8;
+    let count = chars.len();
 
     count >= self.low_bound && count <= self.high_bound
   }
@@ -67,9 +67,9 @@ fn process_row(row: &str) -> Row {
   }
 
   let password = String::from(password);
-  let low_bound = bounds[0].parse::<u8>().unwrap();
-  let high_bound = bounds[1].parse::<u8>().unwrap();
-  let letter = letter[0].parse::<char>().unwrap();
+  let low_bound = bounds[0].parse().unwrap();
+  let high_bound = bounds[1].parse().unwrap();
+  let letter = letter[0].parse().unwrap();
 
   (password, Rule {
     low_bound,
