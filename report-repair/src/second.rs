@@ -11,15 +11,9 @@ pub fn solve() -> u32 {
         }
 
         let candidates = candidates.unwrap();
-
-        for c1 in &candidates {
-            for c2 in &candidates {
-                let target = number + c1 + c2;
-                if target == 2020 {
-                    let result = number * c1 * c2;
-                    return result;
-                }
-            }
+        let target = find_target(number, &candidates);
+        if let Some(result) = target {
+            return result;
         }
     };
 
@@ -41,6 +35,19 @@ fn find_candidates(number: &u32, numbers: &Vec<u32>) -> Option<Vec<u32>> {
     return Some(candidates);
 }
 
+fn find_target(number: &u32, candidates: &Vec<u32>) -> Option<u32> {
+    for c1 in candidates {
+        for c2 in candidates {
+            let target = number + c1 + c2;
+            if target == 2020 {
+                let result = number * c1 * c2;
+                return Some(result);
+            }
+        }
+    }
+
+    return None;
+}
 
 #[cfg(test)]
 mod tests {
