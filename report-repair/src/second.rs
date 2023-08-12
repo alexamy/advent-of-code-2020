@@ -15,10 +15,21 @@ pub fn solve() -> u32 {
         if candidates.len() < 2 {
             continue;
         }
+
+        for c1 in &candidates {
+            for c2 in &candidates {
+                let target = number + c1 + c2;
+                if target == 2020 {
+                    let result = number * c1 * c2;
+                    return result;
+                }
+            }
+        }
     };
 
     panic!("No solution found");
 }
+
 
 #[cfg(test)]
 mod tests {
@@ -26,6 +37,6 @@ mod tests {
 
     #[test]
     fn is_solved() {
-        assert_eq!(solve(), 902451);
+        assert_eq!(solve(), 85555470);
     }
 }
