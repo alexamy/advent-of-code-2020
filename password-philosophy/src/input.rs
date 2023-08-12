@@ -50,7 +50,7 @@ fn process_row(row: &str) -> Row {
 
   let letter: Vec<&str> = letter.split(":").collect();
   if letter.len() != 2 {
-    panic!("Must find 2 parts in letter")
+    panic!("Must find 2 parts in letter");
   }
 
   let password = String::from(password);
