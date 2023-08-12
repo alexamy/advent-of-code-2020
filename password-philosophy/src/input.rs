@@ -8,7 +8,7 @@ pub struct Rule {
 }
 
 impl Rule {
-  fn check(&self, password: &str) -> bool {
+  pub fn check(&self, password: &str) -> bool {
     let chars: Vec<char> = password
       .chars()
       .filter(|letter| *letter == self.letter)
