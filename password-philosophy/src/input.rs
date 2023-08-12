@@ -9,12 +9,11 @@ pub struct Rule {
 
 impl Rule {
   pub fn check(&self, password: &str) -> bool {
-    let chars: Vec<char> = password
+    let count = password
       .chars()
       .filter(|letter| *letter == self.letter)
-      .collect();
-
-    let count = chars.len();
+      .collect::<Vec<char>>()
+      .len();
 
     count >= self.low_bound && count <= self.high_bound
   }
