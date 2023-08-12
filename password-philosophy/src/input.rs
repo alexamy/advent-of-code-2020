@@ -2,21 +2,9 @@ use std::fs;
 
 #[derive(PartialEq, Debug)]
 pub struct Rule {
-  low_bound: usize,
-  high_bound: usize,
-  letter: char,
-}
-
-impl Rule {
-  pub fn check(&self, password: &str) -> bool {
-    let count = password
-      .chars()
-      .filter(|letter| *letter == self.letter)
-      .collect::<Vec<char>>()
-      .len();
-
-    count >= self.low_bound && count <= self.high_bound
-  }
+  pub low_bound: usize,
+  pub high_bound: usize,
+  pub letter: char,
 }
 
 pub type Row = (String, Rule);
@@ -91,31 +79,5 @@ mod tests {
         letter: 'p',
       }),
     );
-  }
-
-  #[test]
-  fn rule_allows_password() {
-    let rule = Rule {
-      low_bound: 2,
-      high_bound: 4,
-      letter: 'p',
-    };
-
-    assert_eq!(rule.check("appx"), true);
-    assert_eq!(rule.check("apppx"), true);
-    assert_eq!(rule.check("appppx"), true);
-  }
-
-  #[test]
-  fn rule_disallows_password() {
-    let rule = Rule {
-      low_bound: 2,
-      high_bound: 4,
-      letter: 'p',
-    };
-
-    assert_eq!(rule.check("ax"), false);
-    assert_eq!(rule.check("apx"), false);
-    assert_eq!(rule.check("apppppx"), false);
   }
 }
