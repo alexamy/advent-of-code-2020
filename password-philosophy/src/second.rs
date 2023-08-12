@@ -6,13 +6,12 @@ trait Check {
 
 impl Check for input::Rule {
     fn check(&self, password: &str) -> bool {
-        let count = password
-            .chars()
-            .filter(|letter| *letter == self.letter)
-            .collect::<Vec<char>>()
-            .len();
+        let chars: Vec<char> = password.chars().collect();
 
-        count >= self.low_bound && count <= self.high_bound
+        let first = chars[self.low_bound - 1] == self.letter;
+        let second = chars[self.high_bound - 1] == self.letter;
+
+        first ^ second
     }
 }
 
@@ -34,32 +33,22 @@ mod tests {
 
     #[test]
     fn is_solved() {
-        assert_eq!(solve(), 500);
+        assert_eq!(solve(), 313);
     }
 
     #[test]
-    fn rule_allows_password() {
+    fn rule_checks_password() {
         let rule = input::Rule {
             low_bound: 2,
             high_bound: 4,
             letter: 'p',
         };
 
-        assert_eq!(rule.check("appx"), true);
-        assert_eq!(rule.check("apppx"), true);
-        assert_eq!(rule.check("appppx"), true);
-    }
+        assert_eq!(rule.check("apwwx"), true);
+        assert_eq!(rule.check("awwppx"), true);
 
-    #[test]
-    fn rule_disallows_password() {
-        let rule = input::Rule {
-            low_bound: 2,
-            high_bound: 4,
-            letter: 'p',
-        };
-
-        assert_eq!(rule.check("ax"), false);
-        assert_eq!(rule.check("apx"), false);
-        assert_eq!(rule.check("apppppx"), false);
+        assert_eq!(rule.check("axpx"), false);
+        assert_eq!(rule.check("axxx"), false);
+        assert_eq!(rule.check("pxxx"), false);
     }
 }
