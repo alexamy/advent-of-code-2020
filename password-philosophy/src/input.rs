@@ -1,10 +1,19 @@
 use std::fs;
 
 #[derive(PartialEq, Debug)]
-struct Rule {
+pub struct Rule {
   low_bound: u8,
   high_bound: u8,
   letter: char,
+}
+
+pub type Row = (String, Rule);
+
+pub fn get_data() -> Vec<Row> {
+  let contents = read();
+  let result = process(&contents);
+
+  result
 }
 
 fn read() -> String {
@@ -16,7 +25,15 @@ fn read() -> String {
   input
 }
 
-fn process_row(row: &str) -> (&str, Rule) {
+fn process(input: &str) -> Vec<Row> {
+  input
+    .split("\n")
+    .filter(|r| !r.is_empty())
+    .map(process_row)
+    .collect()
+}
+
+fn process_row(row: &str) -> Row {
   let parts: Vec<&str> = row.split(" ").collect();
   if parts.len() != 3 {
     panic!("Must find 3 parts in row");
@@ -36,6 +53,7 @@ fn process_row(row: &str) -> (&str, Rule) {
     panic!("Must find 2 parts in letter")
   }
 
+  let password = String::from(password);
   let low_bound = bounds[0].parse::<u8>().unwrap();
   let high_bound = bounds[1].parse::<u8>().unwrap();
   let letter = letter[0].parse::<char>().unwrap();
@@ -55,7 +73,7 @@ mod tests {
   fn processing_row() {
     assert_eq!(
       process_row("9-14 p: bppzpwhzdgnpnh"),
-      ("bppzpwhzdgnpnh", Rule {
+      (String::from("bppzpwhzdgnpnh"), Rule {
         low_bound: 9,
         high_bound: 14,
         letter: 'p',
