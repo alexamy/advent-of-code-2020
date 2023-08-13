@@ -13,16 +13,13 @@ fn count_trees(map: &Vec<String>) -> usize {
     let mut x = 0;
 
     for row in map {
-        let cell = row.chars().nth(x);
-        let length = row.chars().collect::<Vec<_>>().len();
-
-        if let Some(cell) = cell {
+        if let Some(cell) = row.chars().nth(x) {
             if cell == tree {
                 count += 1;
             }
         }
 
-        x = (x + 3) % length;
+        x = (x + 3) % row.len();
     }
 
     count
