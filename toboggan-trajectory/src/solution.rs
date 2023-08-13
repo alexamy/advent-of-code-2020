@@ -9,7 +9,13 @@ pub fn count_trees(map: &Vec<String>, slope: Slope) -> usize {
     let mut count = 0;
     let mut x = 0;
 
-    for row in map {
+    for y in 0..map.len() {
+        if y % slope.y as usize != 0 {
+            continue;
+        }
+
+        let row = &map[y];
+
         if let Some(cell) = row.chars().nth(x) {
             if cell == tree {
                 count += 1;
