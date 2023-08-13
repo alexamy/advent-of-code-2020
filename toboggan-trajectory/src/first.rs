@@ -1,11 +1,11 @@
 use crate::reader;
-use crate::solution::{self, Offset};
+use crate::solution::{self, Slope};
 
 pub fn solve() -> usize {
     let map = reader::read_lines();
 
-    let offset = Offset { x: 3, y: 1 };
-    solution::count_trees(&map, offset)
+    let slope = Slope { x: 3, y: 1 };
+    solution::count_trees(&map, slope)
 }
 
 #[cfg(test)]

@@ -1,9 +1,9 @@
-pub struct Offset {
+pub struct Slope {
     pub x: usize,
     pub y: usize,
 }
 
-pub fn count_trees(map: &Vec<String>, offset: Offset) -> usize {
+pub fn count_trees(map: &Vec<String>, slope: Slope) -> usize {
     let tree = '#';
 
     let mut count = 0;
@@ -16,7 +16,7 @@ pub fn count_trees(map: &Vec<String>, offset: Offset) -> usize {
             }
         }
 
-        x = (x + offset.x) % row.len();
+        x = (x + slope.x) % row.len();
     }
 
     count
@@ -42,7 +42,7 @@ mod tests {
             String::from(".#..#...#.#"),
         ];
 
-        let offset = Offset { x: 3, y: 1 };
-        assert_eq!(count_trees(&map, offset), 7);
+        let slope = Slope { x: 3, y: 1 };
+        assert_eq!(count_trees(&map, slope), 7);
     }
 }
