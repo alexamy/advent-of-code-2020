@@ -1,6 +1,6 @@
 pub struct Slope {
-    pub x: usize,
-    pub y: usize,
+    pub x: u8,
+    pub y: u8,
 }
 
 pub fn count_trees(map: &Vec<String>, slope: Slope) -> usize {
@@ -16,7 +16,7 @@ pub fn count_trees(map: &Vec<String>, slope: Slope) -> usize {
             }
         }
 
-        x = (x + slope.x) % row.len();
+        x = (x + slope.x as usize) % row.len();
     }
 
     count
