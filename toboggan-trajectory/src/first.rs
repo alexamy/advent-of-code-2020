@@ -30,7 +30,12 @@ fn count_trees(map: &Vec<String>) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use crate::first::count_trees;
+    use super::*;
+
+    #[test]
+    fn is_solved() {
+        assert_eq!(solve(), 270);
+    }
 
     #[test]
     fn counting_trees() {
