@@ -7,7 +7,25 @@ pub fn solve() -> usize {
 }
 
 fn count_trees(map: &Vec<String>) -> usize {
-    0
+    let tree = '#';
+
+    let mut count = 0;
+    let mut x = 0;
+
+    for row in map {
+        let cell = row.chars().nth(x);
+        let length = row.chars().collect::<Vec<_>>().len();
+
+        if let Some(cell) = cell {
+            if cell == tree {
+                count += 1;
+            }
+        }
+
+        x = (x + 3) % length;
+    }
+
+    count
 }
 
 #[cfg(test)]
