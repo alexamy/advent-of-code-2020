@@ -27,7 +27,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn counting_trees() {
+    fn counting_trees_with_y_1() {
         let map = vec![
             String::from("..##......."),
             String::from("#...#...#.."),
@@ -44,5 +44,18 @@ mod tests {
 
         let slope = Slope { x: 3, y: 1 };
         assert_eq!(count_trees(&map, slope), 7);
+    }
+
+    #[test]
+    fn counting_trees_with_y_2() {
+        let map = vec![
+            String::from("..##......."),
+            String::from("#...#...#.."),
+            String::from(".#....#..#."),
+            String::from("..#.#...#.#"),
+        ];
+
+        let slope = Slope { x: 1, y: 2 };
+        assert_eq!(count_trees(&map, slope), 1);
     }
 }
