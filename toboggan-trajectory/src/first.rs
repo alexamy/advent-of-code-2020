@@ -4,7 +4,8 @@ use crate::solution;
 pub fn solve() -> usize {
     let map = reader::read_lines();
 
-    solution::count_trees(&map)
+    let right_offset = 3;
+    solution::count_trees(&map, right_offset)
 }
 
 #[cfg(test)]

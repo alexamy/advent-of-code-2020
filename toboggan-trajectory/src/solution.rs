@@ -1,4 +1,4 @@
-pub fn count_trees(map: &Vec<String>) -> usize {
+pub fn count_trees(map: &Vec<String>, x_offset: usize) -> usize {
     let tree = '#';
 
     let mut count = 0;
@@ -11,7 +11,7 @@ pub fn count_trees(map: &Vec<String>) -> usize {
             }
         }
 
-        x = (x + 3) % row.len();
+        x = (x + x_offset) % row.len();
     }
 
     count
@@ -37,6 +37,6 @@ mod tests {
             String::from(".#..#...#.#"),
         ];
 
-        assert_eq!(count_trees(&map), 7);
+        assert_eq!(count_trees(&map, 3), 7);
     }
 }
