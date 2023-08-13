@@ -12,12 +12,10 @@ pub fn solve() -> usize {
         Slope { x: 1, y: 2 },
     ];
 
-    let mut result = 1;
-
-    for slope in slopes {
-        let count = solution::count_trees(&map, slope);
-        result *= count;
-    }
+    let result = slopes
+        .into_iter()
+        .map(|slope| solution::count_trees(&map, slope))
+        .product();
 
     result
 }
