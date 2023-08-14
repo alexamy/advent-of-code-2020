@@ -1,5 +1,6 @@
 mod processor;
 mod reader;
+mod solution;
 // mod first;
 // mod second;
 
