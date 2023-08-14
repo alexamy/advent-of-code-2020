@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "report-repair"
+name = "report_repair"
 version = "0.1.0"

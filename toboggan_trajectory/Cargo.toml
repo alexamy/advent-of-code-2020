@@ -1,5 +1,5 @@
 [package]
-name = "toboggan-trajectory"
+name = "toboggan_trajectory"
 version = "0.1.0"
 edition = "2021"
 
