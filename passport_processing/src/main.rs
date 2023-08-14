@@ -1,3 +1,9 @@
+mod reader;
+mod solution;
+// mod first;
+// mod second;
+
 fn main() {
-    println!("Hello, world!");
+    // println!("First solution: {}", first::solve());
+    // println!("Second solution: {}", second::solve());
 }
