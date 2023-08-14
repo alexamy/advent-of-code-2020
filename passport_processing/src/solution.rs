@@ -1,7 +1,11 @@
 use std::collections::HashMap;
 
 fn split_passports(input: &str) -> Vec<String> {
-    Vec::new()
+    input
+        .split("\n\n")
+        .into_iter()
+        .map(|s| s.replace("\n", " ").trim().to_owned())
+        .collect()
 }
 
 #[cfg(test)]
@@ -10,7 +14,7 @@ mod tests {
 
     #[test]
     fn splitting_passports() {
-        let input = "
+        let input = "\
 ecl:gry pid:860
 byr:1937
 
