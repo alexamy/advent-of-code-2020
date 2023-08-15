@@ -35,21 +35,22 @@ impl Passport {
 
 mod validators {
     pub fn birth_year(input: &str) -> bool {
-        let year: u32 = input.parse().unwrap_or(0);
-
-        input.len() == 4 && year >= 1920 && year <= 2002
+        year(input, 1920, 2002)
     }
 
     pub fn issue_year(input: &str) -> bool {
-        let year: u32 = input.parse().unwrap_or(0);
-
-        input.len() == 4 && year >= 2010 && year <= 2020
+        year(input, 2010, 2020)
     }
 
     pub fn expiration_year(input: &str) -> bool {
-        let year: u32 = input.parse().unwrap_or(0);
+        year(input, 2020, 2030)
+    }
 
-        input.len() == 4 && year >= 2020 && year <= 2030
+    fn year(input: &str, low: u32, high: u32) -> bool {
+        input
+            .parse::<u32>()
+            .map(|year| year >= low && year <= high)
+            .unwrap_or(false)
     }
 }
 
