@@ -25,4 +25,39 @@ impl Passport {
             country_id: entries.get("cid").map(|v| v.to_string()),
         })
     }
+
+    pub fn is_valid(&self) -> bool {
+        validators::birth_year(&self.birth_year)
+    }
+}
+
+mod validators {
+    pub fn birth_year(input: &str) -> bool {
+        let length = input.len();
+        if length != 4 {
+            return false;
+        }
+
+        let year: u32 = input.parse().unwrap_or(0);
+        if year < 1920 || year > 2002 {
+            return false;
+        }
+
+        true
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn validating_birth_year() {
+        assert_eq!(validators::birth_year("2000"), true);
+
+        assert_eq!(validators::birth_year("xxx"), false);
+        assert_eq!(validators::birth_year("100"), false);
+        assert_eq!(validators::birth_year("1919"), false);
+        assert_eq!(validators::birth_year("2003"), false);
+    }
 }
