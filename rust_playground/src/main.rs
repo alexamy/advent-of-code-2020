@@ -13,13 +13,13 @@ fn get_input() -> String {
 }
 
 fn split_whitespace(input: String) -> Vec<String> {
-    input.split(" ").map(|s| s.to_string()).collect()
+    input.split(" ").map(str::to_string).collect()
 }
 
 fn make_hash(vec: Vec<String>) -> HashMap<String, String> {
     vec.iter()
         .map(|s| {
-            let mut entries = s.split(':').map(|s| s.to_string());
+            let mut entries = s.split(':').map(str::to_string);
             let key = entries.next().unwrap();
             let val = entries.next().unwrap();
             (key, val)
