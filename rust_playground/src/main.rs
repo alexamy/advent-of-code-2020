@@ -37,9 +37,11 @@ fn make_hash(vec: Vec<&str>) -> HashMap<&str, &str> {
 
 // String -> ref
 fn test_str_map() {
-    let inputs = vec![String::from("1"), String::from("2")];
+    let inputs = vec![String::from("1")];
+    let result = inputs.into_iter().map(str_identity);
 
-    let inputs = inputs.iter().map(str_identity);
+    let s = String::from("2");
+    str_identity(&s);
 }
 
 fn str_identity(input: &str) -> &str {
