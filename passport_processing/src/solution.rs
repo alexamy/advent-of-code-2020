@@ -37,6 +37,12 @@ mod validators {
 
         input.len() == 4 && year >= 1920 && year <= 2002
     }
+
+    pub fn issue_year(input: &str) -> bool {
+        let year: u32 = input.parse().unwrap_or(0);
+
+        input.len() == 4 && year >= 2010 && year <= 2020
+    }
 }
 
 #[cfg(test)]
@@ -51,5 +57,15 @@ mod tests {
         assert_eq!(validators::birth_year("100"), false);
         assert_eq!(validators::birth_year("1919"), false);
         assert_eq!(validators::birth_year("2003"), false);
+    }
+
+    #[test]
+    fn validating_issue_year() {
+        assert_eq!(validators::issue_year("2015"), true);
+
+        assert_eq!(validators::issue_year("xxx"), false);
+        assert_eq!(validators::issue_year("100"), false);
+        assert_eq!(validators::issue_year("2009"), false);
+        assert_eq!(validators::issue_year("2021"), false);
     }
 }
