@@ -65,8 +65,8 @@ mod validators {
         }
 
         let mut chars = input.chars();
-        let start = chars.next().unwrap_or(' ');
-        if start != '#' {
+        let start = chars.next().filter(|s| *s == '#');
+        if start.is_none() {
             return false;
         }
 
