@@ -30,8 +30,10 @@ impl Passport {
         validators::birth_year(&self.birth_year)
             && validators::issue_year(&self.issue_year)
             && validators::expiration_year(&self.expiration_year)
+            && validators::height(&self.height)
             && validators::hair_color(&self.hair_color)
             && validators::eye_color(&self.eye_color)
+            && validators::passport_id(&self.passport_id)
     }
 }
 
