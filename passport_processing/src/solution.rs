@@ -70,10 +70,9 @@ mod validators {
             return false;
         }
 
-        for chr in chars {
-            if !CHARS.contains(&chr) {
-                return false;
-            }
+        let is_not_hex = chars.any(|chr| !CHARS.contains(&chr));
+        if is_not_hex {
+            return false;
         }
 
         return true;
