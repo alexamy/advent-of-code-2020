@@ -39,15 +39,15 @@ impl Passport {
 
 mod validators {
     pub fn birth_year(input: &str) -> bool {
-        check_number_bounds(input, Min(1920), Max(2002))
+        check_bounds(input, Min(1920), Max(2002))
     }
 
     pub fn issue_year(input: &str) -> bool {
-        check_number_bounds(input, Min(2010), Max(2020))
+        check_bounds(input, Min(2010), Max(2020))
     }
 
     pub fn expiration_year(input: &str) -> bool {
-        check_number_bounds(input, Min(2020), Max(2030))
+        check_bounds(input, Min(2020), Max(2030))
     }
 
     pub fn height(input: &str) -> bool {
@@ -60,8 +60,8 @@ mod validators {
         let suffix = &input[suffix_start..];
 
         match suffix {
-            "cm" => check_number_bounds(number, Min(150), Max(193)),
-            "in" => check_number_bounds(number, Min(59), Max(76)),
+            "cm" => check_bounds(number, Min(150), Max(193)),
+            "in" => check_bounds(number, Min(59), Max(76)),
             _ => false,
         }
     }
@@ -99,7 +99,7 @@ mod validators {
     struct Min(u32);
     struct Max(u32);
 
-    fn check_number_bounds(input: &str, min: Min, max: Max) -> bool {
+    fn check_bounds(input: &str, min: Min, max: Max) -> bool {
         input
             .parse::<u32>()
             .map(|year| year >= min.0 && year <= max.0)
