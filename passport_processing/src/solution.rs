@@ -55,6 +55,22 @@ mod validators {
             .unwrap_or(false)
     }
 
+    pub fn height(input: &str) -> bool {
+        if input.len() < 3 {
+            return false;
+        }
+
+        let suffix_start = input.len() - 2;
+        let number = &input[0..suffix_start];
+        let suffix = &input[suffix_start..];
+
+        match suffix {
+            "cm" => year(number, 150, 193),
+            "in" => year(number, 59, 76),
+            _ => false,
+        }
+    }
+
     pub fn hair_color(input: &str) -> bool {
         const CHARS: [char; 16] = [
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
@@ -122,6 +138,24 @@ mod tests {
         assert_eq!(validators::expiration_year("100"), false);
         assert_eq!(validators::expiration_year("2019"), false);
         assert_eq!(validators::expiration_year("2031"), false);
+    }
+
+    #[test]
+    fn validating_height() {
+        assert_eq!(validators::height("180cm"), true);
+        assert_eq!(validators::height("65in"), true);
+
+        assert_eq!(validators::height("149cm"), false);
+        assert_eq!(validators::height("194cm"), false);
+        assert_eq!(validators::height("58in"), false);
+        assert_eq!(validators::height("77in"), false);
+
+        assert_eq!(validators::height(""), false);
+        assert_eq!(validators::height("table"), false);
+        assert_eq!(validators::height("x1cm"), false);
+        assert_eq!(validators::height("-1in"), false);
+        assert_eq!(validators::height("xxcm"), false);
+        assert_eq!(validators::height("inin"), false);
     }
 
     #[test]
