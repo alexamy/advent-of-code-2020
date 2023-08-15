@@ -33,17 +33,9 @@ impl Passport {
 
 mod validators {
     pub fn birth_year(input: &str) -> bool {
-        let length = input.len();
-        if length != 4 {
-            return false;
-        }
-
         let year: u32 = input.parse().unwrap_or(0);
-        if year < 1920 || year > 2002 {
-            return false;
-        }
 
-        true
+        input.len() == 4 && year >= 1920 && year <= 2002
     }
 }
 
