@@ -1,27 +1,28 @@
 use std::collections::HashMap;
 
+#[derive(Debug)]
 pub struct Passport {
-    birth_year: u32,
-    issue_year: u32,
-    expiration_year: u32,
-    height: u32,
+    birth_year: String,
+    issue_year: String,
+    expiration_year: String,
+    height: String,
     hair_color: String,
     eye_color: String,
-    passport_id: u32,
-    country_id: Option<u32>,
+    passport_id: String,
+    country_id: Option<String>,
 }
 
 impl Passport {
     pub fn new(entries: HashMap<&str, &str>) -> Option<Self> {
         Some(Passport {
-            birth_year: entries.get("byr")?.parse().ok()?,
-            issue_year: entries.get("iyr")?.parse().ok()?,
-            expiration_year: entries.get("eyr")?.parse().ok()?,
-            height: entries.get("hgt")?.parse().ok()?,
+            birth_year: entries.get("byr")?.to_string(),
+            issue_year: entries.get("iyr")?.to_string(),
+            expiration_year: entries.get("eyr")?.to_string(),
+            height: entries.get("hgt")?.to_string(),
             hair_color: entries.get("hcl")?.to_string(),
             eye_color: entries.get("ecl")?.to_string(),
-            passport_id: entries.get("pid")?.parse().ok()?,
-            country_id: entries.get("cid").map(|v| v.parse().unwrap()),
+            passport_id: entries.get("pid")?.to_string(),
+            country_id: entries.get("cid").map(|v| v.to_string()),
         })
     }
 }
