@@ -30,6 +30,7 @@ impl Passport {
         validators::birth_year(&self.birth_year)
             && validators::issue_year(&self.issue_year)
             && validators::expiration_year(&self.expiration_year)
+            && validators::hair_color(&self.hair_color)
             && validators::eye_color(&self.eye_color)
     }
 }
@@ -52,6 +53,30 @@ mod validators {
             .parse::<u32>()
             .map(|year| year >= low && year <= high)
             .unwrap_or(false)
+    }
+
+    pub fn hair_color(input: &str) -> bool {
+        const CHARS: [char; 16] = [
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+        ];
+
+        if input.len() != 7 {
+            return false;
+        }
+
+        let mut chars = input.chars();
+        let start = chars.next().unwrap_or(' ');
+        if start != '#' {
+            return false;
+        }
+
+        for chr in chars {
+            if !CHARS.contains(&chr) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     pub fn eye_color(input: &str) -> bool {
@@ -93,6 +118,17 @@ mod tests {
         assert_eq!(validators::expiration_year("100"), false);
         assert_eq!(validators::expiration_year("2019"), false);
         assert_eq!(validators::expiration_year("2031"), false);
+    }
+
+    #[test]
+    fn validating_hair_color() {
+        assert_eq!(validators::hair_color("#ff0011"), true);
+
+        assert_eq!(validators::hair_color("#FF0011"), false);
+        assert_eq!(validators::hair_color("#ff"), false);
+        assert_eq!(validators::hair_color("ff0011"), false);
+        assert_eq!(validators::hair_color("~ff0011"), false);
+        assert_eq!(validators::hair_color("zx"), false);
     }
 
     #[test]
