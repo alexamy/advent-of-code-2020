@@ -30,6 +30,7 @@ impl Passport {
         validators::birth_year(&self.birth_year)
             && validators::issue_year(&self.issue_year)
             && validators::expiration_year(&self.expiration_year)
+            && validators::eye_color(&self.eye_color)
     }
 }
 
@@ -51,6 +52,12 @@ mod validators {
             .parse::<u32>()
             .map(|year| year >= low && year <= high)
             .unwrap_or(false)
+    }
+
+    pub fn eye_color(input: &str) -> bool {
+        const COLORS: [&str; 7] = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+
+        COLORS.contains(&input)
     }
 }
 
@@ -86,5 +93,15 @@ mod tests {
         assert_eq!(validators::expiration_year("100"), false);
         assert_eq!(validators::expiration_year("2019"), false);
         assert_eq!(validators::expiration_year("2031"), false);
+    }
+
+    #[test]
+    fn validating_eye_color() {
+        assert_eq!(validators::eye_color("amb"), true);
+        assert_eq!(validators::eye_color("blu"), true);
+        assert_eq!(validators::eye_color("oth"), true);
+
+        assert_eq!(validators::eye_color("othx"), false);
+        assert_eq!(validators::eye_color("orange"), false);
     }
 }
