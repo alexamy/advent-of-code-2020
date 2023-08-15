@@ -75,7 +75,7 @@ mod validators {
             return false;
         }
 
-        return true;
+        true
     }
 
     pub fn eye_color(input: &str) -> bool {
