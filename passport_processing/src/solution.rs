@@ -70,7 +70,7 @@ mod validators {
             return false;
         }
 
-        chars.all(|chr| CHARS.contains(&chr))
+        chars.all(|c| CHARS.contains(&c))
     }
 
     pub fn eye_color(input: &str) -> bool {
@@ -86,7 +86,7 @@ mod validators {
             return false;
         }
 
-        input.chars().all(|chr| DIGITS.contains(&chr))
+        input.chars().all(|c| DIGITS.contains(&c))
     }
 }
 
