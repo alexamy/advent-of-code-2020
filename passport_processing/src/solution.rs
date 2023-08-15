@@ -93,11 +93,7 @@ mod validators {
     pub fn passport_id(input: &str) -> bool {
         const DIGITS: [char; 10] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-        if input.len() != 9 {
-            return false;
-        }
-
-        input.chars().all(|c| DIGITS.contains(&c))
+        input.len() == 9 && input.chars().all(|c| DIGITS.contains(&c))
     }
 
     struct Min(u32);
