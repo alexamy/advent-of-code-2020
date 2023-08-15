@@ -83,6 +83,16 @@ mod validators {
 
         COLORS.contains(&input)
     }
+
+    pub fn passport_id(input: &str) -> bool {
+        const DIGITS: [char; 10] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+        if input.len() != 9 {
+            return false;
+        }
+
+        !input.chars().any(|chr| !DIGITS.contains(&chr))
+    }
 }
 
 #[cfg(test)]
@@ -138,5 +148,14 @@ mod tests {
 
         assert_eq!(validators::eye_color("othx"), false);
         assert_eq!(validators::eye_color("orange"), false);
+    }
+
+    #[test]
+    fn validating_passport_id() {
+        assert_eq!(validators::passport_id("000111222"), true);
+        assert_eq!(validators::passport_id("333111222"), true);
+
+        assert_eq!(validators::passport_id("33311122"), false);
+        assert_eq!(validators::passport_id("aaabbbccc"), false);
     }
 }
