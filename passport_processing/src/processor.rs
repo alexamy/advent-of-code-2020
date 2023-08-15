@@ -1,21 +1,21 @@
 use std::collections::HashMap;
 
-fn split_entries(row: &str) -> HashMap<&str, &str> {
+pub fn split_entries(row: &str) -> HashMap<&str, &str> {
     let mut result = HashMap::new();
 
-    for part in row.split(" ") {
+    for part in row.split(" ").collect::<Vec<_>>() {
         let data: Vec<_> = part.split(":").collect();
+
         result.entry(data[0]).or_insert(data[1]);
     }
 
     result
 }
 
-fn split_passports(input: &str) -> Vec<String> {
+pub fn split_passports(input: &str) -> Vec<String> {
     input
         .split("\n\n")
-        .into_iter()
-        .map(|s| s.replace("\n", " ").trim().to_owned())
+        .map(|s| s.trim().replace("\n", " "))
         .collect()
 }
 
@@ -28,7 +28,7 @@ mod tests {
         let input = "ecl:gry pid:860 byr:1937";
         let entities = HashMap::from([("ecl", "gry"), ("pid", "860"), ("byr", "1937")]);
 
-        assert_eq!(split_entries(input), entities);
+        assert_eq!(split_entries(&input), entities);
     }
 
     #[test]
@@ -45,6 +45,6 @@ iyr:2013
             String::from("iyr:2013"),
         ];
 
-        assert_eq!(split_passports(input), entities);
+        assert_eq!(split_passports(&input), entities);
     }
 }

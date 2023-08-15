@@ -6,8 +6,14 @@ fn main() {
     let parts = make_hash(vec);
 
     println!("{}", input);
-
     dbg!(parts);
+
+    let strs = vec![String::from("gh:1"), String::from("xs:2")];
+    let refs = get_splits(&strs);
+}
+
+fn get_splits(strs: &Vec<String>) -> Vec<Vec<&str>> {
+    strs.iter().map(|s| split_whitespace(s)).collect()
 }
 
 fn get_input() -> String {
