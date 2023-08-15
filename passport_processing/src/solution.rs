@@ -70,12 +70,7 @@ mod validators {
             return false;
         }
 
-        let is_not_hex = chars.any(|chr| !CHARS.contains(&chr));
-        if is_not_hex {
-            return false;
-        }
-
-        true
+        chars.all(|chr| CHARS.contains(&chr))
     }
 
     pub fn eye_color(input: &str) -> bool {
@@ -91,7 +86,7 @@ mod validators {
             return false;
         }
 
-        !input.chars().any(|chr| !DIGITS.contains(&chr))
+        input.chars().all(|chr| DIGITS.contains(&chr))
     }
 }
 
