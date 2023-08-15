@@ -28,6 +28,8 @@ impl Passport {
 
     pub fn is_valid(&self) -> bool {
         validators::birth_year(&self.birth_year)
+            && validators::issue_year(&self.issue_year)
+            && validators::expiration_year(&self.expiration_year)
     }
 }
 
@@ -42,6 +44,12 @@ mod validators {
         let year: u32 = input.parse().unwrap_or(0);
 
         input.len() == 4 && year >= 2010 && year <= 2020
+    }
+
+    pub fn expiration_year(input: &str) -> bool {
+        let year: u32 = input.parse().unwrap_or(0);
+
+        input.len() == 4 && year >= 2020 && year <= 2030
     }
 }
 
@@ -67,5 +75,15 @@ mod tests {
         assert_eq!(validators::issue_year("100"), false);
         assert_eq!(validators::issue_year("2009"), false);
         assert_eq!(validators::issue_year("2021"), false);
+    }
+
+    #[test]
+    fn validating_expiration_year() {
+        assert_eq!(validators::expiration_year("2025"), true);
+
+        assert_eq!(validators::expiration_year("xxx"), false);
+        assert_eq!(validators::expiration_year("100"), false);
+        assert_eq!(validators::expiration_year("2019"), false);
+        assert_eq!(validators::expiration_year("2031"), false);
     }
 }
