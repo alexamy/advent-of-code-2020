@@ -4,6 +4,12 @@ pub struct Interval {
     pub max: u32,
 }
 
+struct Input<'a> {
+    code: &'a str,
+    left: char,
+    right: char,
+}
+
 impl Interval {
     pub fn left(&self) -> Self {
         Interval {
@@ -19,7 +25,21 @@ impl Interval {
         }
     }
 
-    pub fn converged(&self) -> Result<u32, &str> {
+    pub fn converge(&self, input: &Input) -> u32 {
+        let mut interval = self.clone();
+
+        for character in input.code.chars() {
+            if character == input.left {
+                interval = interval.left();
+            } else if character == input.right {
+                interval = interval.right();
+            }
+        }
+
+        interval.converged().expect("Interval must be converged")
+    }
+
+    fn converged(&self) -> Result<u32, &str> {
         if self.min == self.max {
             Ok(self.min)
         } else {
@@ -48,5 +68,17 @@ mod tests {
     fn get_converged_value() {
         let interval = Interval { min: 1, max: 1 };
         assert_eq!(interval.converged(), Ok(1));
+    }
+
+    #[test]
+    fn converges_row() {
+        let interval = Interval { min: 0, max: 127 };
+        let input = Input {
+            code: "BFFFBBF",
+            left: 'F',
+            right: 'B',
+        };
+
+        assert_eq!(interval.converge(&input), 70)
     }
 }
