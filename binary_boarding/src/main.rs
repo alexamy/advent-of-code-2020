@@ -1,7 +1,12 @@
 mod first;
-mod processor;
 mod reader;
 // mod second;
+
+mod processor {
+    mod interval;
+    mod parser;
+    pub mod seat;
+}
 
 fn main() {
     println!("First solution: {}", first::solve());
