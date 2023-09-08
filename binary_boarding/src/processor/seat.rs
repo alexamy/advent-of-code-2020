@@ -1,7 +1,7 @@
 use super::parser;
 
 #[derive(PartialEq, Debug)]
-struct Seat {
+pub struct Seat {
     pub row: u32,
     pub column: u32,
     pub id: u32,

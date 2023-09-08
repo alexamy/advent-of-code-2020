@@ -1,3 +1,3 @@
 mod interval;
 mod parser;
-mod seat;
+pub mod seat;
