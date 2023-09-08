@@ -4,10 +4,10 @@ pub struct Interval {
     pub max: u32,
 }
 
-struct Input<'a> {
-    code: &'a str,
-    left: char,
-    right: char,
+pub struct Input<'a> {
+    pub code: &'a str,
+    pub left: char,
+    pub right: char,
 }
 
 impl Interval {
