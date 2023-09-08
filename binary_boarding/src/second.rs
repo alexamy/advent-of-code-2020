@@ -6,11 +6,15 @@ pub fn solve() -> u32 {
     let mut ids: Vec<_> = lines.into_iter().map(Seat::parse).map(|s| s.id).collect();
 
     ids.sort();
+
     for i in 0..ids.len() {
         if let [current, next] = ids[i..i + 2] {
-            if next - current == 2 {
-                return next + 1;
+            let target = current + 1;
+            if target == next {
+                continue;
             }
+
+            return target;
         }
     }
 
@@ -23,6 +27,6 @@ mod tests {
 
     #[test]
     fn is_solved() {
-        assert_eq!(solve(), 0);
+        assert_eq!(solve(), 699);
     }
 }
