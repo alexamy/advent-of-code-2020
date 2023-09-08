@@ -14,13 +14,13 @@ impl Interval {
     pub fn left(&self) -> Self {
         Interval {
             min: self.min,
-            max: self.max / 2,
+            max: self.min + (self.max - self.min) / 2,
         }
     }
 
     pub fn right(&self) -> Self {
         Interval {
-            min: self.max / 2 + 1,
+            min: self.min + (self.max - self.min) / 2 + 1,
             max: self.max,
         }
     }
@@ -60,14 +60,26 @@ mod tests {
 
     #[test]
     fn is_calculate_right() {
-        let interval = Interval { min: 0, max: 127 };
-        assert_eq!(interval.right(), Interval { min: 64, max: 127 });
+        let interval = Interval { min: 4, max: 7 };
+        assert_eq!(interval.right(), Interval { min: 6, max: 7 });
     }
 
     #[test]
     fn get_converged_value() {
         let interval = Interval { min: 1, max: 1 };
         assert_eq!(interval.converged(), Ok(1));
+    }
+
+    #[test]
+    fn converges_row_simple() {
+        let interval = Interval { min: 0, max: 7 };
+        let input = Input {
+            code: "BFF",
+            left: 'F',
+            right: 'B',
+        };
+
+        assert_eq!(interval.converge(&input), 4);
     }
 
     #[test]
@@ -79,6 +91,6 @@ mod tests {
             right: 'B',
         };
 
-        assert_eq!(interval.converge(&input), 70)
+        assert_eq!(interval.converge(&input), 70);
     }
 }
