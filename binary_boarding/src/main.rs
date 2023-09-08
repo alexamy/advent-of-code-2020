@@ -1,6 +1,6 @@
 mod first;
 mod reader;
-// mod second;
+mod second;
 
 mod processor {
     mod interval;
