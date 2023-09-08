@@ -1,3 +1,5 @@
+use super::parser;
+
 #[derive(PartialEq, Debug)]
 struct Seat {
     pub row: u32,
@@ -7,8 +9,10 @@ struct Seat {
 
 impl Seat {
     pub fn parse(code: &str) -> Self {
-        let row = 0;
-        let column = 0;
+        let (row_code, column_code) = code.split_at(7);
+
+        let row = parser::find_row(row_code);
+        let column = parser::find_column(column_code);
         let id = Self::calculate_id(row, column);
 
         Seat { row, column, id }
