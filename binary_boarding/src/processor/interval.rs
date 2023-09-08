@@ -14,13 +14,13 @@ impl Interval {
     pub fn left(&self) -> Self {
         Interval {
             min: self.min,
-            max: self.min + (self.max - self.min) / 2,
+            max: self.half_point(),
         }
     }
 
     pub fn right(&self) -> Self {
         Interval {
-            min: self.min + (self.max - self.min) / 2 + 1,
+            min: self.half_point() + 1,
             max: self.max,
         }
     }
@@ -37,6 +37,10 @@ impl Interval {
         }
 
         interval.converged().expect("Interval must be converged")
+    }
+
+    fn half_point(&self) -> u32 {
+        self.min + (self.max - self.min) / 2
     }
 
     fn converged(&self) -> Result<u32, &str> {
