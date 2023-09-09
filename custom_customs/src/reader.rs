@@ -1,7 +1,7 @@
 use std::fs;
 
 pub fn as_lines(input: &str) -> Vec<&str> {
-    input.split("\n").filter(|r| !r.is_empty()).collect()
+    input.split("\n").collect()
 }
 
 pub fn read_input() -> String {

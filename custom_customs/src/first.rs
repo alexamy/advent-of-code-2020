@@ -10,12 +10,19 @@ fn sum_counts(input: &str) -> u32 {
     let mut count = 0;
     let mut acc: Vec<&str> = Vec::new();
 
-    for line in lines {}
+    for line in lines {
+        if line == "" {
+            count += sum_characters(&acc);
+            acc = Vec::new();
+        } else {
+            acc.push(line);
+        }
+    }
 
     count
 }
 
-fn sum_characters(lines: Vec<&str>) -> u32 {
+fn sum_characters(lines: &Vec<&str>) -> u32 {
     let mut result = String::new();
 
     for line in lines {
@@ -66,6 +73,6 @@ b
     fn sums_characters() {
         let input = Vec::from(["ab", "ac", "ab"]);
 
-        assert_eq!(sum_characters(input), 3);
+        assert_eq!(sum_characters(&input), 3);
     }
 }
