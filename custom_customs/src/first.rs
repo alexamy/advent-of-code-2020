@@ -7,26 +7,12 @@ pub fn solve() -> u32 {
 }
 
 fn sum_counts(input: &str) -> u32 {
-    let lines = reader::as_lines(input);
-
-    let mut count = 0;
-    let mut acc: Vec<&str> = Vec::new();
-
-    for line in lines {
-        if line == "" {
-            count += sum_characters(&acc);
-            acc = Vec::new();
-        } else {
-            acc.push(line);
-        }
-    }
-
-    count
+    input.split("\n\n").map(sum_characters).sum()
 }
 
-fn sum_characters(lines: &Vec<&str>) -> u32 {
-    let mut characters: Vec<_> = lines
-        .iter()
+fn sum_characters(input: &str) -> u32 {
+    let mut characters: Vec<_> = input
+        .lines()
         .fold(String::new(), |acc, line| acc + line)
         .chars()
         .collect();
@@ -71,7 +57,10 @@ b
 
     #[test]
     fn sums_characters() {
-        let input = Vec::from(["ab", "ac", "ab"]);
+        let input = "\
+ab
+ac
+ab";
 
         assert_eq!(sum_characters(&input), 3);
     }
