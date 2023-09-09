@@ -1,7 +1,9 @@
 use crate::reader;
 
 pub fn solve() -> u32 {
-    0
+    let input = reader::read_input();
+
+    sum_counts(&input)
 }
 
 fn sum_counts(input: &str) -> u32 {
@@ -43,7 +45,7 @@ mod tests {
 
     #[test]
     fn is_solved() {
-        assert_eq!(solve(), 0);
+        assert_eq!(solve(), 6437);
     }
 
     #[test]
