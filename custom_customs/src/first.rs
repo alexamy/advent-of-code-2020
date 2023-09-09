@@ -11,11 +11,7 @@ fn sum_counts(input: &str) -> u32 {
 }
 
 fn sum_characters(input: &str) -> u32 {
-    let mut characters: Vec<_> = input
-        .lines()
-        .fold(String::new(), |acc, line| acc + line)
-        .chars()
-        .collect();
+    let mut characters: Vec<_> = input.replace("\n", "").chars().collect();
 
     characters.sort();
     characters.dedup();
