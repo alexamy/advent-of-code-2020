@@ -15,10 +15,10 @@ fn sum_counts(input: &str) -> u32 {
     count
 }
 
-fn sum_characters(input: &str) -> u32 {
+fn sum_characters(lines: Vec<&str>) -> u32 {
     let mut result = String::new();
 
-    for line in input.lines() {
+    for line in lines {
         result += line;
     }
 
@@ -64,11 +64,7 @@ b
 
     #[test]
     fn sums_characters() {
-        let input = "\
-ab
-ac
-ab
-";
+        let input = Vec::from(["ab", "ac", "ab"]);
 
         assert_eq!(sum_characters(input), 3);
     }
