@@ -11,12 +11,17 @@ fn sum_counts(input: &str) -> u32 {
 }
 
 fn sum_characters(input: &str) -> u32 {
-    let mut characters: Vec<_> = input.replace("\n", "").chars().collect();
+    let lines: Vec<_> = input
+        .lines()
+        .map(|line| line.chars().collect::<Vec<_>>())
+        .collect();
 
-    characters.sort();
-    characters.dedup();
+    let mut result = lines[0].clone();
+    for line in &lines[1..] {
+        result = result.into_iter().filter(|ch| line.contains(ch)).collect();
+    }
 
-    characters.len() as u32
+    result.len() as u32
 }
 
 #[cfg(test)]
@@ -25,7 +30,7 @@ mod tests {
 
     #[test]
     fn is_solved() {
-        assert_eq!(solve(), 6437);
+        assert_eq!(solve(), 3229);
     }
 
     #[test]
