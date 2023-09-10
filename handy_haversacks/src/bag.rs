@@ -1,7 +1,13 @@
 #[derive(Debug, PartialEq)]
 struct Bag {
     pub color: String,
-    pub bags: Vec<String>,
+    pub bags: Vec<BagInfo>,
+}
+
+#[derive(Debug, PartialEq)]
+struct BagInfo {
+    pub color: String,
+    pub count: u32,
 }
 
 impl Bag {
@@ -23,7 +29,16 @@ mod tests {
             Bag::parse("light red bags contain 1 bright white bag, 2 muted yellow bags."),
             Bag {
                 color: String::from("light red"),
-                bags: Vec::from([String::from("bright white"), String::from("muted yellow"),]),
+                bags: Vec::from([
+                    BagInfo {
+                        count: 1,
+                        color: String::from("bright white")
+                    },
+                    BagInfo {
+                        count: 2,
+                        color: String::from("muted yellow")
+                    },
+                ]),
             }
         );
     }
