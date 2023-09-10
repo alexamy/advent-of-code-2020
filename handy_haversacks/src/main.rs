@@ -1,7 +1,10 @@
-mod bag_parser;
 mod first;
 mod reader;
 // mod second;
+mod bag {
+    pub mod graph;
+    pub mod parser;
+}
 
 fn main() {
     println!("First solution: {}", first::solve());
