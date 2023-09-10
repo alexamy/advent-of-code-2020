@@ -1,18 +1,18 @@
 #[derive(Debug, PartialEq)]
-struct Bag {
+struct Row {
     pub color: String,
-    pub bags: Vec<BagInfo>,
+    pub bags: Vec<Info>,
 }
 
 #[derive(Debug, PartialEq)]
-struct BagInfo {
+struct Info {
     pub color: String,
     pub count: u32,
 }
 
-impl Bag {
-    pub fn parse(description: &str) -> Bag {
-        Bag {
+impl Row {
+    pub fn parse(description: &str) -> Row {
+        Row {
             color: String::from(""),
             bags: Vec::from([]),
         }
@@ -26,15 +26,15 @@ mod tests {
     #[test]
     fn parses_bag() {
         assert_eq!(
-            Bag::parse("light red bags contain 1 bright white bag, 2 muted yellow bags."),
-            Bag {
+            Row::parse("light red bags contain 1 bright white bag, 2 muted yellow bags."),
+            Row {
                 color: String::from("light red"),
                 bags: Vec::from([
-                    BagInfo {
+                    Info {
                         count: 1,
                         color: String::from("bright white")
                     },
-                    BagInfo {
+                    Info {
                         count: 2,
                         color: String::from("muted yellow")
                     },
@@ -46,8 +46,8 @@ mod tests {
     #[test]
     fn parses_empty_bag() {
         assert_eq!(
-            Bag::parse("faded blue bags contain no other bags."),
-            Bag {
+            Row::parse("faded blue bags contain no other bags."),
+            Row {
                 color: String::from("faded blue"),
                 bags: Vec::from([]),
             }
