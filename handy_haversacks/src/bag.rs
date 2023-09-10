@@ -10,12 +10,10 @@ struct Info {
     pub count: u32,
 }
 
-impl Row {
-    pub fn parse(description: &str) -> Row {
-        Row {
-            color: String::from(""),
-            bags: Vec::from([]),
-        }
+pub fn parse(description: &str) -> Row {
+    Row {
+        color: String::from(""),
+        bags: Vec::from([]),
     }
 }
 
@@ -26,7 +24,7 @@ mod tests {
     #[test]
     fn parses_bag() {
         assert_eq!(
-            Row::parse("light red bags contain 1 bright white bag, 2 muted yellow bags."),
+            parse("light red bags contain 1 bright white bag, 2 muted yellow bags."),
             Row {
                 color: String::from("light red"),
                 bags: Vec::from([
@@ -46,7 +44,7 @@ mod tests {
     #[test]
     fn parses_empty_bag() {
         assert_eq!(
-            Row::parse("faded blue bags contain no other bags."),
+            parse("faded blue bags contain no other bags."),
             Row {
                 color: String::from("faded blue"),
                 bags: Vec::from([]),
