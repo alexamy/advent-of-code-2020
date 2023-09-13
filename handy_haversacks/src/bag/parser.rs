@@ -21,15 +21,18 @@ pub fn parse(description: &str) -> Row {
 
 fn parse_source(description: &str) -> &str {
     let re = Regex::new(r"([\w\s]+) bags contain").unwrap();
-    for (_, [color]) in re.captures_iter(description).map(|c| c.extract()) {
+    if let Some(caps) = re.captures(description) {
+        let (_, [color]) = caps.extract();
+
         return color;
     }
 
-    ""
+    panic!("Cant found color");
 }
 
 fn parse_bags(description: &str) -> Vec<Info> {
     let re = Regex::new(r"(\d+) ([\w\s]+) bag").unwrap();
+
     let mut bags = Vec::new();
     for (_, [count, color]) in re.captures_iter(description).map(|c| c.extract()) {
         let count = count.parse().unwrap();
