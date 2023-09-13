@@ -1,3 +1,5 @@
+use regex::Regex;
+
 #[derive(Debug, PartialEq)]
 pub struct Row<'a> {
     pub color: &'a str,
@@ -11,35 +13,30 @@ pub struct Info<'a> {
 }
 
 pub fn parse(description: &str) -> Row {
-    let parts: Vec<_> = description.split(" bags contain ").collect();
-    let color = *parts.get(0).expect("Must have color");
-    let parts = *parts.get(1).expect("Must have parts");
+    Row {
+        color: parse_source(description),
+        bags: parse_bags(description),
+    }
+}
 
-    let is_none = parts.starts_with("no");
-    if is_none {
-        return Row {
-            color,
-            bags: Vec::new(),
-        };
+fn parse_source(description: &str) -> &str {
+    let re = Regex::new(r"([\w\s]+) bags contain").unwrap();
+    for (_, [color]) in re.captures_iter(description).map(|c| c.extract()) {
+        return color;
     }
 
+    ""
+}
+
+fn parse_bags(description: &str) -> Vec<Info> {
+    let re = Regex::new(r"(\d+) ([\w\s]+) bag").unwrap();
     let mut bags = Vec::new();
-    for color in parts.split(", ") {
-        let parts: Vec<_> = color.split(" ").collect();
-        let count_str = parts.get(0).expect("Must have count");
-        let count: u32 = count_str.parse().expect("Must be count");
-
-        let shade = parts.get(1).expect("Must have shade");
-        let base = parts.get(2).expect("Must have base");
-
-        let start = count_str.len() + 1;
-        let end = shade.len() + base.len() + 3;
-        let color = &color[start..end];
-
-        bags.push(Info { count, color })
+    for (_, [count, color]) in re.captures_iter(description).map(|c| c.extract()) {
+        let count = count.parse().unwrap();
+        bags.push(Info { color, count });
     }
 
-    Row { color, bags }
+    bags
 }
 
 #[cfg(test)]
