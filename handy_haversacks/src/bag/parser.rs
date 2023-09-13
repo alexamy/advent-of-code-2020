@@ -14,12 +14,12 @@ pub struct Info<'a> {
 
 pub fn parse(description: &str) -> Row {
     Row {
-        color: parse_source(description),
+        color: parse_color(description),
         bags: parse_bags(description),
     }
 }
 
-fn parse_source(description: &str) -> &str {
+fn parse_color(description: &str) -> &str {
     let re = Regex::new(r"([\w\s]+) bags contain").unwrap();
     let (_, [color]) = re.captures(description).unwrap().extract();
 
