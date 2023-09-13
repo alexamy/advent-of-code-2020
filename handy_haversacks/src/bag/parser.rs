@@ -1,20 +1,43 @@
 #[derive(Debug, PartialEq)]
-struct Row {
-    pub color: String,
-    pub bags: Vec<Info>,
+pub struct Row<'a> {
+    pub color: &'a str,
+    pub bags: Vec<Info<'a>>,
 }
 
 #[derive(Debug, PartialEq)]
-struct Info {
-    pub color: String,
+pub struct Info<'a> {
+    pub color: &'a str,
     pub count: u32,
 }
 
 pub fn parse(description: &str) -> Row {
-    Row {
-        color: String::from(""),
-        bags: Vec::from([]),
+    let parts: Vec<_> = description.split(" bags contain ").collect();
+    let color = *parts.get(0).expect("Must have color");
+    let parts = *parts.get(1).expect("Must have parts");
+
+    let is_none = parts.starts_with("no");
+    if is_none {
+        return Row {
+            color,
+            bags: Vec::new(),
+        };
     }
+
+    let mut bags = Vec::new();
+    for color in parts.split(", ") {
+        let parts: Vec<_> = color.split(" ").collect();
+        let count: u32 = parts
+            .get(0)
+            .expect("Must have count")
+            .parse()
+            .expect("Must be count");
+
+        let color = "black";
+
+        bags.push(Info { count, color })
+    }
+
+    Row { color, bags }
 }
 
 #[cfg(test)]
@@ -26,15 +49,15 @@ mod tests {
         assert_eq!(
             parse("light red bags contain 1 bright white bag, 2 muted yellow bags."),
             Row {
-                color: String::from("light red"),
+                color: "light red",
                 bags: Vec::from([
                     Info {
                         count: 1,
-                        color: String::from("bright white")
+                        color: "bright white",
                     },
                     Info {
                         count: 2,
-                        color: String::from("muted yellow")
+                        color: "muted yellow",
                     },
                 ]),
             }
@@ -46,7 +69,7 @@ mod tests {
         assert_eq!(
             parse("faded blue bags contain no other bags."),
             Row {
-                color: String::from("faded blue"),
+                color: "faded blue",
                 bags: Vec::from([]),
             }
         );
