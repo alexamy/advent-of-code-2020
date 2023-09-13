@@ -26,13 +26,15 @@ pub fn parse(description: &str) -> Row {
     let mut bags = Vec::new();
     for color in parts.split(", ") {
         let parts: Vec<_> = color.split(" ").collect();
-        let count: u32 = parts
-            .get(0)
-            .expect("Must have count")
-            .parse()
-            .expect("Must be count");
+        let count_str = parts.get(0).expect("Must have count");
+        let count: u32 = count_str.parse().expect("Must be count");
 
-        let color = "black";
+        let shade = parts.get(1).expect("Must have shade");
+        let base = parts.get(2).expect("Must have base");
+
+        let start = count_str.len() + 1;
+        let end = shade.len() + base.len() + 3;
+        let color = &color[start..end];
 
         bags.push(Info { count, color })
     }
@@ -47,17 +49,17 @@ mod tests {
     #[test]
     fn parses_bag() {
         assert_eq!(
-            parse("light red bags contain 1 bright white bag, 2 muted yellow bags."),
+            parse("light red bags contain 1 bright yellow bag, 2 muted red bags."),
             Row {
                 color: "light red",
                 bags: Vec::from([
                     Info {
                         count: 1,
-                        color: "bright white",
+                        color: "bright yellow",
                     },
                     Info {
                         count: 2,
-                        color: "muted yellow",
+                        color: "muted red",
                     },
                 ]),
             }
