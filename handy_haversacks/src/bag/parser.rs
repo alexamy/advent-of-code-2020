@@ -21,13 +21,9 @@ pub fn parse(description: &str) -> Row {
 
 fn parse_source(description: &str) -> &str {
     let re = Regex::new(r"([\w\s]+) bags contain").unwrap();
-    if let Some(caps) = re.captures(description) {
-        let (_, [color]) = caps.extract();
+    let (_, [color]) = re.captures(description).unwrap().extract();
 
-        return color;
-    }
-
-    panic!("Cant found color");
+    color
 }
 
 fn parse_bags(description: &str) -> Vec<Info> {
