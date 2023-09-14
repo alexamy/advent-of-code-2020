@@ -1,17 +1,17 @@
 use std::collections::HashMap;
 
-use super::parser::Row;
+use super::parser::{self, Info, Row};
 
 pub fn parse(description: &str) -> HashMap<&str, Row> {
-    let result = HashMap::new();
-
-    result
+    description
+        .split("\n")
+        .map(|line| parser::parse(line))
+        .map(|row| (row.color, row))
+        .collect::<HashMap<_, _>>()
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::bag::parser::Info;
-
     use super::*;
 
     #[test]
