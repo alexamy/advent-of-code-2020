@@ -2,6 +2,10 @@ use std::collections::HashMap;
 
 use super::parser::{self, Info, Row};
 
+pub fn count(description: &str) -> u32 {
+    0
+}
+
 fn collect(description: Vec<&str>) -> HashMap<&str, Row> {
     description
         .iter()
@@ -13,6 +17,18 @@ fn collect(description: Vec<&str>) -> HashMap<&str, Row> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn is_counted() {
+        let input = "\
+bright white bags contain 1 shiny gold bag.
+light red bags contain 2 bright white bag.
+lemon orange bags contain 3 shiny gold bag.
+dark green bags contain 1 ultra pink bag.
+        ";
+
+        assert_eq!(count(input), 3);
+    }
 
     #[test]
     fn is_parsed() {
