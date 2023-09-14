@@ -2,14 +2,18 @@ use regex::Regex;
 
 #[derive(Debug, PartialEq)]
 pub struct Row<'a> {
-    pub count: u32,
     pub color: &'a str,
-    pub bags: Vec<Box<Row<'a>>>,
+    pub bags: Vec<Info<'a>>,
+}
+
+#[derive(Debug, PartialEq)]
+pub struct Info<'a> {
+    pub color: &'a str,
+    pub count: u32,
 }
 
 pub fn parse(description: &str) -> Row {
     Row {
-        count: 1,
         color: parse_color(description),
         bags: parse_bags(description),
     }
@@ -22,17 +26,13 @@ fn parse_color(description: &str) -> &str {
     color
 }
 
-fn parse_bags(description: &str) -> Vec<Box<Row>> {
+fn parse_bags(description: &str) -> Vec<Info> {
     let re = Regex::new(r"(\d+) ([\w\s]+) bag").unwrap();
 
     let mut bags = Vec::new();
     for (_, [count, color]) in re.captures_iter(description).map(|c| c.extract()) {
         let count = count.parse().unwrap();
-        bags.push(Box::new(Row {
-            color,
-            count,
-            bags: Vec::from([]),
-        }));
+        bags.push(Info { color, count });
     }
 
     bags
@@ -47,19 +47,16 @@ mod tests {
         assert_eq!(
             parse("light red bags contain 1 bright yellow bag, 2 muted red bags."),
             Row {
-                count: 1,
                 color: "light red",
                 bags: Vec::from([
-                    Box::new(Row {
+                    Info {
                         count: 1,
                         color: "bright yellow",
-                        bags: Vec::new(),
-                    }),
-                    Box::new(Row {
+                    },
+                    Info {
                         count: 2,
                         color: "muted red",
-                        bags: Vec::new(),
-                    }),
+                    },
                 ]),
             }
         );
@@ -70,7 +67,6 @@ mod tests {
         assert_eq!(
             parse("faded blue bags contain no other bags."),
             Row {
-                count: 1,
                 color: "faded blue",
                 bags: Vec::new(),
             }
