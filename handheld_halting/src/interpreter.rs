@@ -2,7 +2,6 @@ use crate::parser;
 
 pub fn solve(input: &str) -> i32 {
     let instructions = parser::parse(input);
-    println!("{:?}", instructions);
 
     0
 }

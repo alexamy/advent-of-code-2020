@@ -18,13 +18,13 @@ fn parse_instruction(line: &str) -> Instruction {
         _ => panic!("Unknown instruction"),
     };
 
-    let offset = parse_number(&line[4..]);
+    let offset = parse_number(line);
 
     instruction(offset)
 }
 
 fn parse_number(line: &str) -> i32 {
-    line.parse().expect("Expect a number for instruction")
+    line[4..].parse().expect("Expect a number for instruction")
 }
 
 #[cfg(test)]
