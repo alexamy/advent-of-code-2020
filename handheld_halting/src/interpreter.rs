@@ -14,7 +14,7 @@ pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
         }
     }
 
-    0
+    panic!("Cant fix corruption");
 }
 
 fn replace_instruction(original: &Vec<Instruction>, index: usize) -> Option<i32> {
