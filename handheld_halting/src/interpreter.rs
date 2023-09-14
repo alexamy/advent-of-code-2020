@@ -1,6 +1,10 @@
 use crate::parser::Instruction;
 use std::collections::HashMap;
 
+pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
+    0
+}
+
 pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
     let mut accumulator: i32 = 0;
     let mut position: i32 = 0;
@@ -34,7 +38,25 @@ mod tests {
     use crate::parser;
 
     #[test]
-    fn is_solved_simple() {
+    fn corruption_fixed() {
+        let input = "\
+nop +0
+acc +1
+jmp +4
+acc +3
+jmp -3
+acc -99
+acc +1
+jmp -4
+acc +6";
+
+        let instructions = parser::parse(input);
+
+        assert_eq!(fix_corruption(instructions), 8);
+    }
+
+    #[test]
+    fn is_cycle_found() {
         let input = "\
 nop +0
 acc +1
