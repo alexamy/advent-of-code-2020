@@ -1,4 +1,4 @@
-use crate::parser::{self, Instruction};
+use crate::parser::Instruction;
 use std::collections::HashMap;
 
 pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
@@ -28,15 +28,10 @@ pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
     }
 }
 
-fn solve(input: &str) -> i32 {
-    let instructions = parser::parse(input);
-
-    find_cycle(instructions)
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::parser;
 
     #[test]
     fn is_solved_simple() {
@@ -51,6 +46,8 @@ acc +1
 jmp -4
 acc +6";
 
-        assert_eq!(solve(input), 5);
+        let instructions = parser::parse(input);
+
+        assert_eq!(find_cycle(instructions), 5);
     }
 }
