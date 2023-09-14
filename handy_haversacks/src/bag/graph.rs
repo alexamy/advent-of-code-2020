@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use super::parser::{self, Info, Row};
 
-fn parse(description: Vec<&str>) -> HashMap<&str, Row> {
+fn collect(description: Vec<&str>) -> HashMap<&str, Row> {
     description
         .iter()
         .map(|line| parser::parse(line))
@@ -22,7 +22,7 @@ mod tests {
         ];
 
         assert_eq!(
-            parse(input),
+            collect(input),
             HashMap::from([
                 (
                     "light red",
