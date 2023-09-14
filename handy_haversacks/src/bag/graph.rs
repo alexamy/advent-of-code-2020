@@ -2,16 +2,15 @@ use std::collections::HashMap;
 
 use super::parser::{self, Info, Row};
 
-pub fn count(description: &str) -> u32 {
-    0
-}
+pub fn count(description: &str, target: &str) -> u32 {
+    let rows = description.split("\n").map(|line| parser::parse(line));
 
-fn collect(description: Vec<&str>) -> HashMap<&str, Row> {
-    description
-        .iter()
-        .map(|line| parser::parse(line))
-        .map(|row| (row.color, row))
-        .collect::<HashMap<_, _>>()
+    let mut entries = HashMap::new();
+    for Row { color, bags } in rows {
+        for Info { color, count: _ } in bags {}
+    }
+
+    entries.keys().len() as u32
 }
 
 #[cfg(test)]
@@ -27,40 +26,6 @@ lemon orange bags contain 3 shiny gold bag.
 dark green bags contain 1 ultra pink bag.
         ";
 
-        assert_eq!(count(input), 3);
-    }
-
-    #[test]
-    fn is_parsed() {
-        let input = vec![
-            "light red bags contain 2 bright white bag.",
-            "bright white bags contain 1 shiny gold bag.",
-        ];
-
-        assert_eq!(
-            collect(input),
-            HashMap::from([
-                (
-                    "light red",
-                    Row {
-                        color: "light red",
-                        bags: vec![Info {
-                            count: 2,
-                            color: "bright white",
-                        }],
-                    }
-                ),
-                (
-                    "bright white",
-                    Row {
-                        color: "bright white",
-                        bags: vec![Info {
-                            count: 1,
-                            color: "shiny gold",
-                        }],
-                    }
-                )
-            ])
-        );
+        assert_eq!(count(input, "shiny gold"), 3);
     }
 }
