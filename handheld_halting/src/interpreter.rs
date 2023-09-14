@@ -16,8 +16,8 @@ pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
             .and_modify(|count| *count += 1)
             .or_insert(1);
 
-        let instruction = &instructions[position as usize];
         let mut next = 1;
+        let instruction = &instructions[position as usize];
         match instruction {
             Instruction::Nop(_) => (),
             Instruction::Acc(offset) => accumulator += offset,
