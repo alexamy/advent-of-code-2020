@@ -12,13 +12,13 @@ pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
         match *instruction {
             Instruction::Acc(_) => continue,
             Instruction::Jmp(_) => {
-                let copy = switch_instruction(&instructions, i);
+                let copy = replace_instruction(&instructions, i);
                 if let Result::Finish(accumulator) = interpret(copy) {
                     return accumulator;
                 }
             }
             Instruction::Nop(_) => {
-                let copy = switch_instruction(&instructions, i);
+                let copy = replace_instruction(&instructions, i);
                 if let Result::Finish(accumulator) = interpret(copy) {
                     return accumulator;
                 }
@@ -29,7 +29,7 @@ pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
     0
 }
 
-fn switch_instruction(original: &Vec<Instruction>, index: usize) -> Vec<Instruction> {
+fn replace_instruction(original: &Vec<Instruction>, index: usize) -> Vec<Instruction> {
     let mut instructions = original.to_vec();
 
     instructions[index] = match instructions[index] {
