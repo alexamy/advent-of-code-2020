@@ -9,8 +9,9 @@ pub enum Result {
 
 pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
     for i in 0..instructions.len() {
-        if let Some(accumulator) = replace_instruction(&instructions, i) {
-            return accumulator;
+        match replace_instruction(&instructions, i) {
+            Some(accumulator) => return accumulator,
+            None => continue,
         }
     }
 
@@ -26,17 +27,16 @@ fn replace_instruction(original: &Vec<Instruction>, index: usize) -> Option<i32>
         Instruction::Acc(_) => return None,
     };
 
-    if let Result::Finish(accumulator) = interpret(instructions) {
-        return Some(accumulator);
+    match interpret(instructions) {
+        Result::Finish(accumulator) => Some(accumulator),
+        Result::Cycle(_) => None,
     }
-
-    None
 }
 
 pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
     match interpret(instructions) {
         Result::Cycle(accumulator) => accumulator,
-        _ => panic!("No cycle found"),
+        Result::Finish(_) => panic!("No cycle found"),
     }
 }
 
