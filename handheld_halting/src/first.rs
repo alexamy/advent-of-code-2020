@@ -1,9 +1,10 @@
-use crate::{interpreter, reader};
+use crate::{interpreter, parser, reader};
 
 pub fn solve() -> i32 {
     let input = reader::read_input();
+    let instructions = parser::parse(&input);
 
-    interpreter::solve(&input)
+    interpreter::find_cycle(instructions)
 }
 
 #[cfg(test)]

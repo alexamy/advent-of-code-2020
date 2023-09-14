@@ -1,13 +1,7 @@
 use crate::parser::{self, Instruction};
 use std::collections::HashMap;
 
-pub fn solve(input: &str) -> i32 {
-    let instructions = parser::parse(input);
-
-    interpret(instructions)
-}
-
-fn interpret(instructions: Vec<Instruction>) -> i32 {
+pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
     let mut accumulator: i32 = 0;
     let mut position: i32 = 0;
     let mut counts = HashMap::new();
@@ -32,6 +26,12 @@ fn interpret(instructions: Vec<Instruction>) -> i32 {
 
         position += next;
     }
+}
+
+fn solve(input: &str) -> i32 {
+    let instructions = parser::parse(input);
+
+    find_cycle(instructions)
 }
 
 #[cfg(test)]
