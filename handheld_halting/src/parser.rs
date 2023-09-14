@@ -6,7 +6,11 @@ pub enum Instruction {
 }
 
 pub fn parse(input: &str) -> Vec<Instruction> {
-    input.split("\n").map(parse_instruction).collect()
+    input
+        .split("\n")
+        .filter(|line| !line.is_empty())
+        .map(parse_instruction)
+        .collect()
 }
 
 fn parse_instruction(line: &str) -> Instruction {
