@@ -12,7 +12,10 @@ pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
 }
 
 pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
-    0
+    match interpret(instructions) {
+        Result::Cycle(accumulator) => accumulator,
+        _ => panic!("No cycle found"),
+    }
 }
 
 fn interpret(instructions: Vec<Instruction>) -> Result {
