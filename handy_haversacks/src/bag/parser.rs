@@ -50,12 +50,12 @@ mod tests {
                 color: "light red",
                 bags: Vec::from([
                     Info {
-                        count: 1,
                         color: "bright yellow",
+                        count: 1,
                     },
                     Info {
-                        count: 2,
                         color: "muted red",
+                        count: 2,
                     },
                 ]),
             }
