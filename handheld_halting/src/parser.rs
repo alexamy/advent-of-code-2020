@@ -26,3 +26,25 @@ fn parse_instruction(line: &str) -> Instruction {
 fn parse_number(line: &str) -> i32 {
     line.parse().expect("Expect a number for instruction")
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn is_solved() {
+        let input = "\
+nop +0
+acc +1
+jmp -4";
+
+        assert_eq!(
+            parse(input),
+            vec![
+                Instruction::Nop(0),
+                Instruction::Acc(1),
+                Instruction::Jmp(-4),
+            ]
+        );
+    }
+}
