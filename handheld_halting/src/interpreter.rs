@@ -11,8 +11,22 @@ pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
     for (i, instruction) in instructions.iter().enumerate() {
         match *instruction {
             Instruction::Acc(_) => continue,
-            Instruction::Jmp(offset) => {}
-            Instruction::Nop(offset) => {}
+            Instruction::Jmp(offset) => {
+                let mut copy = instructions.to_vec();
+                copy[i] = Instruction::Nop(offset);
+
+                if let Result::Finish(accumulator) = interpret(copy) {
+                    return accumulator;
+                }
+            }
+            Instruction::Nop(offset) => {
+                let mut copy = instructions.to_vec();
+                copy[i] = Instruction::Jmp(offset);
+
+                if let Result::Finish(accumulator) = interpret(copy) {
+                    return accumulator;
+                }
+            }
         }
     }
 
