@@ -8,30 +8,11 @@ pub struct Bag<'a> {
 }
 
 pub fn parse(infos: Vec<&str>) -> Vec<Bag> {
-    let mut hash = HashMap::new();
+    let bags = Vec::new();
+    // let mut hash = HashMap::new();
     let rows = infos.iter().map(|line| parser::parse(line));
 
-    let mut result = Vec::new();
-    for parser::Row { color, bags } in rows {
-        let parent = hash.entry(color).or_insert_with(|| {
-            let mut result = Vec::new();
-            for parser::Info { color, count: _ } in bags {
-                let child = hash.entry(color).or_insert(Bag {
-                    color,
-                    bags: Vec::new(),
-                });
-
-                result.push(Box::new(*child));
-            }
-
-            Bag {
-                color,
-                bags: result,
-            }
-        });
-    }
-
-    result
+    bags
 }
 
 #[cfg(test)]
@@ -60,7 +41,7 @@ mod tests {
                 "light red bags contain 2 bright white bag.",
                 "bright white bags contain 1 shiny gold bag."
             ])),
-            Vec::from([light_red, bright_white]),
+            Vec::from([light_red]),
         )
     }
 }
