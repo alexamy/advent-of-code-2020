@@ -1,16 +1,7 @@
-use crate::{
-    parser::{self, Instruction},
-    reader,
-};
+use crate::parser::{self, Instruction};
 use std::collections::HashMap;
 
-pub fn solve() -> i32 {
-    let input = reader::read_input();
-
-    solve_input(&input)
-}
-
-fn solve_input(input: &str) -> i32 {
+pub fn solve(input: &str) -> i32 {
     let instructions = parser::parse(input);
 
     interpret(instructions)
@@ -48,11 +39,6 @@ mod tests {
     use super::*;
 
     #[test]
-    fn is_solved() {
-        assert_eq!(solve(), 1797);
-    }
-
-    #[test]
     fn is_solved_simple() {
         let input = "\
 nop +0
@@ -65,6 +51,6 @@ acc +1
 jmp -4
 acc +6";
 
-        assert_eq!(solve_input(input), 5);
+        assert_eq!(solve(input), 5);
     }
 }
