@@ -97,4 +97,11 @@ acc +6";
 
         assert_eq!(find_cycle(instructions), 5);
     }
+
+    #[test]
+    fn is_finished() {
+        let instructions = vec![Instruction::Nop(0), Instruction::Acc(1)];
+
+        assert_eq!(interpret(instructions), Result::Finish(1));
+    }
 }
