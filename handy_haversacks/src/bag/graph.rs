@@ -3,11 +3,7 @@ use std::collections::HashMap;
 use super::parser::{self, Info, Row};
 
 pub fn count(description: &str, target: &str) -> u32 {
-    let rows: HashMap<_, _> = description
-        .split("\n")
-        .map(|line| parser::parse(line))
-        .map(|row| (row.color, row))
-        .collect();
+    let rows = as_hashmap(description);
 
     let mut entries = HashMap::new();
     for (_, Row { color, bags }) in rows {
@@ -15,6 +11,14 @@ pub fn count(description: &str, target: &str) -> u32 {
     }
 
     entries.keys().len() as u32
+}
+
+fn as_hashmap(description: &str) -> HashMap<&str, Row> {
+    description
+        .split("\n")
+        .map(|line| parser::parse(line))
+        .map(|row| (row.color, row))
+        .collect()
 }
 
 #[cfg(test)]
