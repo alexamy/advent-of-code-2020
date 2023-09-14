@@ -46,14 +46,14 @@ fn interpret(instructions: Vec<Instruction>) -> Result {
     let mut counts = HashMap::new();
 
     loop {
-        if counts.contains_key(&position) {
-            return Result::Cycle(accumulator);
-        }
-
         counts
             .entry(position)
             .and_modify(|count| *count += 1)
             .or_insert(1);
+
+        if counts[&position] == 2 {
+            return Result::Cycle(accumulator);
+        }
 
         let mut next = 1;
         let instruction = &instructions[position as usize];
