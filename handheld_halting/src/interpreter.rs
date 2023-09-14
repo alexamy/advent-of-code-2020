@@ -8,6 +8,14 @@ pub enum Result {
 }
 
 pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
+    for (i, instruction) in instructions.iter().enumerate() {
+        match *instruction {
+            Instruction::Acc(_) => continue,
+            Instruction::Jmp(offset) => {}
+            Instruction::Nop(offset) => {}
+        }
+    }
+
     0
 }
 
