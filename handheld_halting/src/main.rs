@@ -1,4 +1,5 @@
 mod interpreter;
+mod parser;
 mod reader;
 
 fn main() {
