@@ -3,10 +3,14 @@ use std::collections::HashMap;
 use super::parser::{self, Info, Row};
 
 pub fn count(description: &str, target: &str) -> u32 {
-    let rows = description.split("\n").map(|line| parser::parse(line));
+    let rows: HashMap<_, _> = description
+        .split("\n")
+        .map(|line| parser::parse(line))
+        .map(|row| (row.color, row))
+        .collect();
 
     let mut entries = HashMap::new();
-    for Row { color, bags } in rows {
+    for (_, Row { color, bags }) in rows {
         for Info { color, count: _ } in bags {}
     }
 
