@@ -2,7 +2,6 @@ mod first;
 mod reader;
 // mod second;
 mod bag {
-    pub mod graph;
     pub mod parser;
 }
 

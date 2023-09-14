@@ -2,18 +2,14 @@ use regex::Regex;
 
 #[derive(Debug, PartialEq)]
 pub struct Row<'a> {
-    pub color: &'a str,
-    pub bags: Vec<Info<'a>>,
-}
-
-#[derive(Debug, PartialEq)]
-pub struct Info<'a> {
-    pub color: &'a str,
     pub count: u32,
+    pub color: &'a str,
+    pub bags: Option<Vec<Box<Row<'a>>>>,
 }
 
 pub fn parse(description: &str) -> Row {
     Row {
+        count: 1,
         color: parse_color(description),
         bags: parse_bags(description),
     }
@@ -26,16 +22,24 @@ fn parse_color(description: &str) -> &str {
     color
 }
 
-fn parse_bags(description: &str) -> Vec<Info> {
+fn parse_bags(description: &str) -> Option<Vec<Box<Row>>> {
     let re = Regex::new(r"(\d+) ([\w\s]+) bag").unwrap();
 
     let mut bags = Vec::new();
     for (_, [count, color]) in re.captures_iter(description).map(|c| c.extract()) {
         let count = count.parse().unwrap();
-        bags.push(Info { color, count });
+        bags.push(Box::new(Row {
+            color,
+            count,
+            bags: None,
+        }));
     }
 
-    bags
+    if bags.is_empty() {
+        None
+    } else {
+        Some(bags)
+    }
 }
 
 #[cfg(test)]
@@ -47,17 +51,20 @@ mod tests {
         assert_eq!(
             parse("light red bags contain 1 bright yellow bag, 2 muted red bags."),
             Row {
+                count: 1,
                 color: "light red",
-                bags: Vec::from([
-                    Info {
+                bags: Some(Vec::from([
+                    Box::new(Row {
                         count: 1,
                         color: "bright yellow",
-                    },
-                    Info {
+                        bags: None,
+                    }),
+                    Box::new(Row {
                         count: 2,
                         color: "muted red",
-                    },
-                ]),
+                        bags: None,
+                    }),
+                ])),
             }
         );
     }
@@ -67,8 +74,9 @@ mod tests {
         assert_eq!(
             parse("faded blue bags contain no other bags."),
             Row {
+                count: 1,
                 color: "faded blue",
-                bags: Vec::from([]),
+                bags: None,
             }
         );
     }
