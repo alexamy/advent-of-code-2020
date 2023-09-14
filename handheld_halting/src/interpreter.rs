@@ -1,18 +1,28 @@
 use crate::parser::Instruction;
 use std::collections::HashMap;
 
+#[derive(Debug, PartialEq)]
+pub enum Result {
+    Cycle(i32),
+    Finish(i32),
+}
+
 pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
     0
 }
 
 pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
+    0
+}
+
+fn interpret(instructions: Vec<Instruction>) -> Result {
     let mut accumulator: i32 = 0;
     let mut position: i32 = 0;
     let mut counts = HashMap::new();
 
     loop {
         if counts.contains_key(&position) {
-            return accumulator;
+            return Result::Cycle(accumulator);
         }
 
         counts
@@ -29,6 +39,10 @@ pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
         }
 
         position += next;
+
+        if position == instructions.len() as i32 {
+            return Result::Finish(accumulator);
+        }
     }
 }
 
@@ -56,7 +70,7 @@ acc +6";
     }
 
     #[test]
-    fn is_cycle_found() {
+    fn cycle_found() {
         let input = "\
 nop +0
 acc +1
