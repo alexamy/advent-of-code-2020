@@ -14,12 +14,15 @@ pub fn count(description: &str, target: &str) -> u32 {
         for bag in bags {
             if bag.color == target {
                 count += 1;
+            } else {
             }
         }
     }
 
     count
 }
+
+fn count_rec(hash: HashMap<&str, Row>, target: &str, count: u32) {}
 
 fn as_hashmap(description: &str) -> HashMap<&str, Row> {
     description
