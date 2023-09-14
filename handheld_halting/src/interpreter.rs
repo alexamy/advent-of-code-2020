@@ -11,18 +11,14 @@ pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
     for (i, instruction) in instructions.iter().enumerate() {
         match *instruction {
             Instruction::Acc(_) => continue,
-            Instruction::Jmp(offset) => {
-                let mut copy = instructions.to_vec();
-                copy[i] = Instruction::Nop(offset);
-
+            Instruction::Jmp(_) => {
+                let copy = switch_instruction(&instructions, i);
                 if let Result::Finish(accumulator) = interpret(copy) {
                     return accumulator;
                 }
             }
-            Instruction::Nop(offset) => {
-                let mut copy = instructions.to_vec();
-                copy[i] = Instruction::Jmp(offset);
-
+            Instruction::Nop(_) => {
+                let copy = switch_instruction(&instructions, i);
                 if let Result::Finish(accumulator) = interpret(copy) {
                     return accumulator;
                 }
@@ -31,6 +27,18 @@ pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
     }
 
     0
+}
+
+fn switch_instruction(original: &Vec<Instruction>, index: usize) -> Vec<Instruction> {
+    let mut instructions = original.to_vec();
+
+    instructions[index] = match instructions[index] {
+        Instruction::Jmp(offset) => Instruction::Nop(offset),
+        Instruction::Nop(offset) => Instruction::Jmp(offset),
+        Instruction::Acc(_) => panic!("Cant change Acc instruction"),
+    };
+
+    instructions
 }
 
 pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
