@@ -5,12 +5,20 @@ use super::parser::{self, Info, Row};
 pub fn count(description: &str, target: &str) -> u32 {
     let rows = as_hashmap(description);
 
-    let mut entries = HashMap::new();
+    let mut count = 0;
     for (_, Row { color, bags }) in rows {
-        for Info { color, count: _ } in bags {}
+        if color == target {
+            continue;
+        }
+
+        for bag in bags {
+            if bag.color == target {
+                count += 1;
+            }
+        }
     }
 
-    entries.keys().len() as u32
+    count
 }
 
 fn as_hashmap(description: &str) -> HashMap<&str, Row> {
@@ -31,8 +39,7 @@ mod tests {
 bright white bags contain 1 shiny gold bag.
 light red bags contain 2 bright white bag.
 lemon orange bags contain 3 shiny gold bag.
-dark green bags contain 1 ultra pink bag.
-        ";
+dark green bags contain 1 ultra pink bag.";
 
         assert_eq!(count(input, "shiny gold"), 3);
     }
