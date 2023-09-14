@@ -8,37 +8,29 @@ pub enum Result {
 }
 
 pub fn fix_corruption(instructions: Vec<Instruction>) -> i32 {
-    for (i, instruction) in instructions.iter().enumerate() {
-        match *instruction {
-            Instruction::Acc(_) => continue,
-            Instruction::Jmp(_) => {
-                let copy = replace_instruction(&instructions, i);
-                if let Result::Finish(accumulator) = interpret(copy) {
-                    return accumulator;
-                }
-            }
-            Instruction::Nop(_) => {
-                let copy = replace_instruction(&instructions, i);
-                if let Result::Finish(accumulator) = interpret(copy) {
-                    return accumulator;
-                }
-            }
+    for i in 0..instructions.len() {
+        if let Some(accumulator) = replace_instruction(&instructions, i) {
+            return accumulator;
         }
     }
 
     0
 }
 
-fn replace_instruction(original: &Vec<Instruction>, index: usize) -> Vec<Instruction> {
+fn replace_instruction(original: &Vec<Instruction>, index: usize) -> Option<i32> {
     let mut instructions = original.to_vec();
 
     instructions[index] = match instructions[index] {
         Instruction::Jmp(offset) => Instruction::Nop(offset),
         Instruction::Nop(offset) => Instruction::Jmp(offset),
-        Instruction::Acc(_) => panic!("Cant change Acc instruction"),
+        Instruction::Acc(_) => return None,
     };
 
-    instructions
+    if let Result::Finish(accumulator) = interpret(instructions) {
+        return Some(accumulator);
+    }
+
+    None
 }
 
 pub fn find_cycle(instructions: Vec<Instruction>) -> i32 {
