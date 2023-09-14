@@ -4,7 +4,7 @@ use regex::Regex;
 pub struct Row<'a> {
     pub count: u32,
     pub color: &'a str,
-    pub bags: Option<Vec<Box<Row<'a>>>>,
+    pub bags: Vec<Box<Row<'a>>>,
 }
 
 pub fn parse(description: &str) -> Row {
@@ -22,7 +22,7 @@ fn parse_color(description: &str) -> &str {
     color
 }
 
-fn parse_bags(description: &str) -> Option<Vec<Box<Row>>> {
+fn parse_bags(description: &str) -> Vec<Box<Row>> {
     let re = Regex::new(r"(\d+) ([\w\s]+) bag").unwrap();
 
     let mut bags = Vec::new();
@@ -31,15 +31,11 @@ fn parse_bags(description: &str) -> Option<Vec<Box<Row>>> {
         bags.push(Box::new(Row {
             color,
             count,
-            bags: None,
+            bags: Vec::from([]),
         }));
     }
 
-    if bags.is_empty() {
-        None
-    } else {
-        Some(bags)
-    }
+    bags
 }
 
 #[cfg(test)]
@@ -53,18 +49,18 @@ mod tests {
             Row {
                 count: 1,
                 color: "light red",
-                bags: Some(Vec::from([
+                bags: Vec::from([
                     Box::new(Row {
                         count: 1,
                         color: "bright yellow",
-                        bags: None,
+                        bags: Vec::new(),
                     }),
                     Box::new(Row {
                         count: 2,
                         color: "muted red",
-                        bags: None,
+                        bags: Vec::new(),
                     }),
-                ])),
+                ]),
             }
         );
     }
@@ -76,7 +72,7 @@ mod tests {
             Row {
                 count: 1,
                 color: "faded blue",
-                bags: None,
+                bags: Vec::new(),
             }
         );
     }
