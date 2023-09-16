@@ -17,6 +17,6 @@ mod tests {
 
     #[test]
     fn is_solved() {
-        assert_eq!(solve(), 0);
+        assert_eq!(solve(), 1124361034);
     }
 }
