@@ -1,4 +1,4 @@
-pub fn find_breaking(numbers: Vec<u32>, preamble_length: u32) -> Option<u32> {
+pub fn find_breaking(numbers: Vec<u64>, preamble_length: u64) -> Option<u64> {
     let checks = &numbers[preamble_length as usize..];
 
     for (i, number) in checks.iter().enumerate() {
@@ -17,7 +17,7 @@ pub fn find_breaking(numbers: Vec<u32>, preamble_length: u32) -> Option<u32> {
     None
 }
 
-fn is_contained(numbers: &[u32], target: u32) -> bool {
+fn is_contained(numbers: &[u64], target: u64) -> bool {
     for (ci, c1) in numbers.iter().enumerate() {
         if ci == numbers.len() - 1 {
             return false;

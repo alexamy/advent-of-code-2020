@@ -1,8 +1,8 @@
 use crate::{finder, reader};
 
-pub fn solve() -> u32 {
+pub fn solve() -> u64 {
     let input = reader::read_input();
-    let numbers: Vec<u32> = input
+    let numbers: Vec<u64> = input
         .split("\n")
         .filter(|line| !line.is_empty())
         .map(|n| n.parse().unwrap())
