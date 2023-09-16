@@ -1,4 +1,4 @@
-mod first;
+mod finder;
 mod reader;
 
 fn main() {

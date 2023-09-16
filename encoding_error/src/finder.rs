@@ -1,5 +1,3 @@
-use core::num;
-
 fn find_breaking(numbers: Vec<u32>, preamble_length: u32) -> Option<u32> {
     let checks = &numbers[preamble_length as usize..];
 
