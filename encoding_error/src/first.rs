@@ -1,7 +1,9 @@
 use core::num;
 
 fn find_breaking(numbers: Vec<u32>, preamble_length: u32) -> Option<u32> {
-    for (i, number) in numbers.iter().enumerate() {
+    let checks = &numbers[preamble_length as usize..];
+
+    for (i, number) in checks.iter().enumerate() {
         let end_index = i + preamble_length as usize;
         if end_index > numbers.len() {
             return None;
