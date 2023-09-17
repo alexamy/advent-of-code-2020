@@ -1,3 +1,7 @@
+pub fn find_sum_sequence(numbers: Vec<u64>, target: u64) -> Option<Vec<u64>> {
+    None
+}
+
 pub fn find_breaking(numbers: Vec<u64>, preamble_length: u64) -> Option<u64> {
     let checks = &numbers[preamble_length as usize..];
 
@@ -36,6 +40,16 @@ fn is_contained(numbers: &[u64], target: u64) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn is_found_sequence() {
+        let numbers = vec![
+            35, 20, 15, 25, 47, 40, 62, 55, 65, 95, 102, 117, 150, 182, 127, 219, 299, 277, 309,
+            576,
+        ];
+
+        assert_eq!(find_sum_sequence(numbers, 127), Some(vec![15, 25, 47, 40]))
+    }
 
     #[test]
     fn is_found_breaking() {
