@@ -1,4 +1,4 @@
-pub fn find_sum_sequence(numbers: Vec<u64>, target: u64) -> Option<u64> {
+pub fn find_sum_sequence(numbers: &[u64], target: u64) -> Option<u64> {
     let sequence = find_sequence(numbers, target)?;
     let min = sequence.iter().min()?;
     let max = sequence.iter().max()?;
@@ -6,7 +6,7 @@ pub fn find_sum_sequence(numbers: Vec<u64>, target: u64) -> Option<u64> {
     Some(min + max)
 }
 
-fn find_sequence(numbers: Vec<u64>, target: u64) -> Option<Vec<u64>> {
+fn find_sequence(numbers: &[u64], target: u64) -> Option<Vec<u64>> {
     let mut result = Vec::new();
     let mut sum = 0;
     for (i, _) in numbers.iter().enumerate() {
@@ -28,7 +28,7 @@ fn find_sequence(numbers: Vec<u64>, target: u64) -> Option<Vec<u64>> {
     None
 }
 
-pub fn find_breaking(numbers: Vec<u64>, preamble_length: u64) -> Option<u64> {
+pub fn find_breaking(numbers: &[u64], preamble_length: u64) -> Option<u64> {
     let checks = &numbers[preamble_length as usize..];
 
     for (i, number) in checks.iter().enumerate() {
@@ -74,7 +74,7 @@ mod tests {
             576,
         ];
 
-        assert_eq!(find_sum_sequence(numbers, 127), Some(62));
+        assert_eq!(find_sum_sequence(&numbers, 127), Some(62));
     }
 
     #[test]
@@ -84,7 +84,7 @@ mod tests {
             576,
         ];
 
-        assert_eq!(find_sequence(numbers, 127), Some(vec![15, 25, 47, 40]))
+        assert_eq!(find_sequence(&numbers, 127), Some(vec![15, 25, 47, 40]))
     }
 
     #[test]
@@ -94,6 +94,6 @@ mod tests {
             576,
         ];
 
-        assert_eq!(find_breaking(numbers, 5), Some(127))
+        assert_eq!(find_breaking(&numbers, 5), Some(127))
     }
 }

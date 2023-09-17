@@ -8,7 +8,7 @@ pub fn solve() -> u64 {
         .map(|n| n.parse().unwrap())
         .collect();
 
-    finder::find_breaking(numbers, 25).expect("No solution found")
+    finder::find_breaking(&numbers, 25).expect("No solution found")
 }
 
 #[cfg(test)]

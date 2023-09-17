@@ -8,7 +8,10 @@ pub fn solve() -> u64 {
         .map(|n| n.parse().unwrap())
         .collect();
 
-    finder::find_sum_sequence(numbers, 1124361034).expect("No solution found")
+    let breaking_number = finder::find_breaking(&numbers, 25).unwrap();
+    let result = finder::find_sum_sequence(&numbers, breaking_number).unwrap();
+
+    result
 }
 
 #[cfg(test)]
