@@ -1,4 +1,22 @@
 pub fn find_sum_sequence(numbers: Vec<u64>, target: u64) -> Option<Vec<u64>> {
+    let mut result = Vec::new();
+    let mut sum = 0;
+    for (i, _) in numbers.iter().enumerate() {
+        for number in &numbers[i..] {
+            result.push(*number);
+            sum += number;
+
+            if sum == target {
+                return Some(result);
+            } else if sum > target {
+                break;
+            }
+        }
+
+        result = Vec::new();
+        sum = 0;
+    }
+
     None
 }
 
