@@ -1,4 +1,12 @@
-pub fn find_sum_sequence(numbers: Vec<u64>, target: u64) -> Option<Vec<u64>> {
+pub fn find_sum_sequence(numbers: Vec<u64>, target: u64) -> Option<u64> {
+    let sequence = find_sequence(numbers, target)?;
+    let min = sequence.iter().min()?;
+    let max = sequence.iter().max()?;
+
+    Some(min + max)
+}
+
+fn find_sequence(numbers: Vec<u64>, target: u64) -> Option<Vec<u64>> {
     let mut result = Vec::new();
     let mut sum = 0;
     for (i, _) in numbers.iter().enumerate() {
@@ -60,13 +68,23 @@ mod tests {
     use super::*;
 
     #[test]
+    fn is_found_sum_sequnce() {
+        let numbers = vec![
+            35, 20, 15, 25, 47, 40, 62, 55, 65, 95, 102, 117, 150, 182, 127, 219, 299, 277, 309,
+            576,
+        ];
+
+        assert_eq!(find_sum_sequence(numbers, 127), Some(62));
+    }
+
+    #[test]
     fn is_found_sequence() {
         let numbers = vec![
             35, 20, 15, 25, 47, 40, 62, 55, 65, 95, 102, 117, 150, 182, 127, 219, 299, 277, 309,
             576,
         ];
 
-        assert_eq!(find_sum_sequence(numbers, 127), Some(vec![15, 25, 47, 40]))
+        assert_eq!(find_sequence(numbers, 127), Some(vec![15, 25, 47, 40]))
     }
 
     #[test]
