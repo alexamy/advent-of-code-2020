@@ -5,13 +5,20 @@ enum Cell {
     Occupied,
 }
 
+type Field = Vec<Vec<Cell>>;
+struct Coordinates(u32, u32);
+
 pub fn count_seats(map: &str) -> u32 {
     let map = convert_map(map);
 
     0
 }
 
-fn convert_map(map: &str) -> Vec<Vec<Cell>> {
+fn next_state(field: Field, coordinates: Coordinates) -> Cell {
+    Cell::Empty
+}
+
+fn convert_map(map: &str) -> Field {
     map.split("\n")
         .map(|line| line.chars().map(get_cell).collect())
         .collect()
