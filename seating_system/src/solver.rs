@@ -9,7 +9,7 @@ type Field = Vec<Vec<Cell>>;
 struct Position(usize, usize);
 
 pub fn count_seats(map: &str) -> u32 {
-    let map = convert_map(map);
+    let map = convert_field(map);
 
     0
 }
@@ -82,8 +82,9 @@ fn get_field_cell(field: &Field, position: Position) -> Option<&Cell> {
     field.get(y).and_then(|row| row.get(x))
 }
 
-fn convert_map(map: &str) -> Field {
-    map.split("\n")
+fn convert_field(field: &str) -> Field {
+    field
+        .split("\n")
         .map(|line| line.chars().map(get_cell_type).collect())
         .collect()
 }
@@ -104,7 +105,7 @@ mod tests {
     #[test]
     fn converts_map() {
         assert_eq!(
-            convert_map(".L#"),
+            convert_field(".L#"),
             vec![vec![Cell::Floor, Cell::Empty, Cell::Occupied]],
         );
     }
