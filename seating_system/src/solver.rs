@@ -14,25 +14,40 @@ pub fn count_seats(map: &str) -> u32 {
     0
 }
 
-fn next_state(field: Field) -> Field {}
+fn next_state(field: Field) -> Field {
+    let mut result = Vec::new();
 
-fn next_state_for_cell(field: Field, position: Position) -> Cell {
+    for (y, row) in field.iter().enumerate() {
+        let mut next_row = Vec::new();
+
+        for (x, _) in row.iter().enumerate() {
+            let next_state = next_state_for_cell(&field, Position(x, y));
+            next_row.push(next_state);
+        }
+
+        result.push(next_row);
+    }
+
+    result
+}
+
+fn next_state_for_cell(field: &Field, position: Position) -> Cell {
     let Position(x, y) = position;
-    let cell = get_field_cell(&field, position);
+    let cell = get_field_cell(field, position);
 
     if let Some(Cell::Floor) = cell {
         return Cell::Floor;
     }
 
     let neighbours = vec![
-        get_field_cell(&field, Position(x - 1, y - 1)),
-        get_field_cell(&field, Position(x + 1, y + 1)),
-        get_field_cell(&field, Position(x + 1, y - 1)),
-        get_field_cell(&field, Position(x - 1, y + 1)),
-        get_field_cell(&field, Position(x, y - 1)),
-        get_field_cell(&field, Position(x, y + 1)),
-        get_field_cell(&field, Position(x - 1, y)),
-        get_field_cell(&field, Position(x + 1, y)),
+        get_field_cell(field, Position(x - 1, y - 1)),
+        get_field_cell(field, Position(x + 1, y + 1)),
+        get_field_cell(field, Position(x + 1, y - 1)),
+        get_field_cell(field, Position(x - 1, y + 1)),
+        get_field_cell(field, Position(x, y - 1)),
+        get_field_cell(field, Position(x, y + 1)),
+        get_field_cell(field, Position(x - 1, y)),
+        get_field_cell(field, Position(x + 1, y)),
     ];
 
     let occupied_count = neighbours
