@@ -8,8 +8,8 @@ enum Cell {
 type Field = Vec<Vec<Cell>>;
 struct Position(usize, usize);
 
-pub fn count_seats(map: &str) -> u32 {
-    let map = convert_field(map);
+pub fn count_seats(field: &str) -> u32 {
+    let field = convert_field(field);
 
     0
 }
