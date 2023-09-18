@@ -1,5 +1,6 @@
 mod first;
 mod reader;
+mod solver;
 // mod second;
 
 fn main() {
