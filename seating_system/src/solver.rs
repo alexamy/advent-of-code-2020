@@ -8,10 +8,26 @@ enum Cell {
 type Field = Vec<Vec<Cell>>;
 struct Position(usize, usize);
 
-pub fn count_seats(field: &str) -> u32 {
-    let field = convert_field(field);
+pub fn count_seats(map: &str) -> u32 {
+    let mut current_field = convert_field(map);
+    let mut next_field = current_field;
 
-    0
+    loop {
+        current_field = next_field;
+        next_field = next_state(&current_field);
+
+        if is_same_field(&current_field, &next_field) {
+            break;
+        }
+    }
+
+    let occupied_seats = current_field
+        .into_iter()
+        .flatten()
+        .filter(|cell| cell == &Cell::Occupied)
+        .count();
+
+    occupied_seats as u32
 }
 
 fn is_same_field(field1: &Field, field2: &Field) -> bool {
@@ -27,7 +43,7 @@ fn is_same_field(field1: &Field, field2: &Field) -> bool {
     true
 }
 
-fn next_state(field: Field) -> Field {
+fn next_state(field: &Field) -> Field {
     let mut result = Vec::new();
 
     for (y, row) in field.iter().enumerate() {
