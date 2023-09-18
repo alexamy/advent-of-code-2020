@@ -14,6 +14,19 @@ pub fn count_seats(field: &str) -> u32 {
     0
 }
 
+fn is_same_field(field1: &Field, field2: &Field) -> bool {
+    for (y, row1) in field1.iter().enumerate() {
+        for (x, cell1) in row1.iter().enumerate() {
+            let cell2 = get_field_cell(field2, Position(x, y));
+            if Some(cell1) != cell2 {
+                return false;
+            }
+        }
+    }
+
+    true
+}
+
 fn next_state(field: Field) -> Field {
     let mut result = Vec::new();
 
