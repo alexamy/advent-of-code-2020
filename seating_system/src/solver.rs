@@ -6,7 +6,7 @@ enum Cell {
 }
 
 type Field = Vec<Vec<Cell>>;
-struct Position(usize, usize);
+struct Position(isize, isize);
 
 pub fn count_seats(map: &str) -> u32 {
     let mut current_field = convert_field(map);
@@ -33,7 +33,7 @@ pub fn count_seats(map: &str) -> u32 {
 fn is_same_field(field1: &Field, field2: &Field) -> bool {
     for (y, row1) in field1.iter().enumerate() {
         for (x, cell1) in row1.iter().enumerate() {
-            let cell2 = get_field_cell(field2, Position(x, y));
+            let cell2 = get_field_cell(field2, Position(x as isize, y as isize));
             if Some(cell1) != cell2 {
                 return false;
             }
@@ -50,7 +50,7 @@ fn next_state(field: &Field) -> Field {
         let mut next_row = Vec::new();
 
         for (x, _) in row.iter().enumerate() {
-            let next_state = next_state_for_cell(&field, Position(x, y));
+            let next_state = next_state_for_cell(&field, Position(x as isize, y as isize));
             next_row.push(next_state);
         }
 
@@ -108,7 +108,7 @@ fn next_state_for_cell(field: &Field, position: Position) -> Cell {
 fn get_field_cell(field: &Field, position: Position) -> Option<&Cell> {
     let Position(x, y) = position;
 
-    field.get(y).and_then(|row| row.get(x))
+    field.get(y as usize).and_then(|row| row.get(x as usize))
 }
 
 fn convert_field(field: &str) -> Field {
