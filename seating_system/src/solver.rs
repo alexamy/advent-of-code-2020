@@ -14,7 +14,9 @@ pub fn count_seats(map: &str) -> u32 {
     0
 }
 
-fn next_state(field: Field, position: Position) -> Cell {
+fn next_state(field: Field) -> Field {}
+
+fn next_state_for_cell(field: Field, position: Position) -> Cell {
     let Position(x, y) = position;
     let cell = get_field_cell(&field, position);
 
@@ -22,7 +24,41 @@ fn next_state(field: Field, position: Position) -> Cell {
         return Cell::Floor;
     }
 
-    Cell::Empty
+    let neighbours = vec![
+        get_field_cell(&field, Position(x - 1, y - 1)),
+        get_field_cell(&field, Position(x + 1, y + 1)),
+        get_field_cell(&field, Position(x + 1, y - 1)),
+        get_field_cell(&field, Position(x - 1, y + 1)),
+        get_field_cell(&field, Position(x, y - 1)),
+        get_field_cell(&field, Position(x, y + 1)),
+        get_field_cell(&field, Position(x - 1, y)),
+        get_field_cell(&field, Position(x + 1, y)),
+    ];
+
+    let occupied_count = neighbours
+        .into_iter()
+        .filter(|el| el == &Some(&Cell::Occupied))
+        .count();
+
+    let cell_state = match cell {
+        Some(Cell::Empty) => {
+            if occupied_count == 0 {
+                Cell::Occupied
+            } else {
+                Cell::Empty
+            }
+        }
+        Some(Cell::Occupied) => {
+            if occupied_count >= 4 {
+                Cell::Empty
+            } else {
+                Cell::Occupied
+            }
+        }
+        state => panic!("Unexpected state cell: {:?}", state),
+    };
+
+    cell_state
 }
 
 fn get_field_cell(field: &Field, position: Position) -> Option<&Cell> {
