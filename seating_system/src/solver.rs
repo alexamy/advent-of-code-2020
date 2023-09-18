@@ -6,7 +6,7 @@ enum Cell {
 }
 
 type Field = Vec<Vec<Cell>>;
-struct Coordinates(usize, usize);
+struct Position(usize, usize);
 
 pub fn count_seats(map: &str) -> u32 {
     let map = convert_map(map);
@@ -14,9 +14,9 @@ pub fn count_seats(map: &str) -> u32 {
     0
 }
 
-fn next_state(field: Field, coordinates: Coordinates) -> Cell {
-    let Coordinates(x, y) = coordinates;
-    let cell = get_cell(&field, coordinates);
+fn next_state(field: Field, position: Position) -> Cell {
+    let Position(x, y) = position;
+    let cell = get_cell(&field, position);
 
     if let Some(Cell::Floor) = cell {
         return Cell::Floor;
@@ -25,8 +25,8 @@ fn next_state(field: Field, coordinates: Coordinates) -> Cell {
     Cell::Empty
 }
 
-fn get_cell(field: &Field, coordinates: Coordinates) -> Option<&Cell> {
-    let Coordinates(x, y) = coordinates;
+fn get_cell(field: &Field, position: Position) -> Option<&Cell> {
+    let Position(x, y) = position;
 
     field.get(y).and_then(|row| row.get(x))
 }
