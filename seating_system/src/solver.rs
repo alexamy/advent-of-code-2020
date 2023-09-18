@@ -16,13 +16,19 @@ pub fn count_seats(map: &str) -> u32 {
 
 fn next_state(field: Field, coordinates: Coordinates) -> Cell {
     let Coordinates(x, y) = coordinates;
-    let cell = field.get(y).and_then(|row| row.get(x));
+    let cell = get_cell(&field, coordinates);
 
     if let Some(Cell::Floor) = cell {
         return Cell::Floor;
     }
 
     Cell::Empty
+}
+
+fn get_cell(field: &Field, coordinates: Coordinates) -> Option<&Cell> {
+    let Coordinates(x, y) = coordinates;
+
+    field.get(y).and_then(|row| row.get(x))
 }
 
 fn convert_map(map: &str) -> Field {
