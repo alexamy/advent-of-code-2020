@@ -16,7 +16,7 @@ pub fn count_seats(map: &str) -> u32 {
 
 fn next_state(field: Field, position: Position) -> Cell {
     let Position(x, y) = position;
-    let cell = get_cell(&field, position);
+    let cell = get_field_cell(&field, position);
 
     if let Some(Cell::Floor) = cell {
         return Cell::Floor;
@@ -25,7 +25,7 @@ fn next_state(field: Field, position: Position) -> Cell {
     Cell::Empty
 }
 
-fn get_cell(field: &Field, position: Position) -> Option<&Cell> {
+fn get_field_cell(field: &Field, position: Position) -> Option<&Cell> {
     let Position(x, y) = position;
 
     field.get(y).and_then(|row| row.get(x))
@@ -33,11 +33,11 @@ fn get_cell(field: &Field, position: Position) -> Option<&Cell> {
 
 fn convert_map(map: &str) -> Field {
     map.split("\n")
-        .map(|line| line.chars().map(get_cell).collect())
+        .map(|line| line.chars().map(get_cell_type).collect())
         .collect()
 }
 
-fn get_cell(character: char) -> Cell {
+fn get_cell_type(character: char) -> Cell {
     match character {
         '.' => Cell::Floor,
         'L' => Cell::Empty,
