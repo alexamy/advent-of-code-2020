@@ -1,3 +1,4 @@
+mod field;
 mod first;
 mod reader;
 mod solver;

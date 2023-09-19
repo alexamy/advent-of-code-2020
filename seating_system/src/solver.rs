@@ -1,15 +1,9 @@
-#[derive(Debug, PartialEq)]
-enum Cell {
-    Floor,
-    Empty,
-    Occupied,
-}
+use crate::field::{self, Cell, Field};
 
-type Field = Vec<Vec<Cell>>;
 struct Position(isize, isize);
 
 pub fn count_seats(map: &str) -> u32 {
-    let mut current_field = convert_field(map);
+    let mut current_field = field::convert_field(map);
     let mut next_field = current_field;
 
     loop {
@@ -98,33 +92,9 @@ fn get_field_cell(field: &Field, position: Position) -> Option<&Cell> {
     field.get(y as usize).and_then(|row| row.get(x as usize))
 }
 
-fn convert_field(field: &str) -> Field {
-    field
-        .split("\n")
-        .map(|line| line.chars().map(get_cell_type).collect())
-        .collect()
-}
-
-fn get_cell_type(character: char) -> Cell {
-    match character {
-        '.' => Cell::Floor,
-        'L' => Cell::Empty,
-        '#' => Cell::Occupied,
-        c => panic!("Unknown cell character: {}", c),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn converts_map() {
-        assert_eq!(
-            convert_field(".L#"),
-            vec![vec![Cell::Floor, Cell::Empty, Cell::Occupied]],
-        );
-    }
 
     #[test]
     fn seats_are_counted() {
