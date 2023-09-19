@@ -16,7 +16,7 @@ pub fn count_seats(map: &str) -> u32 {
         current_field = next_field;
         next_field = next_state(&current_field);
 
-        if is_same_field(&current_field, &next_field) {
+        if current_field == next_field {
             break;
         }
     }
@@ -28,19 +28,6 @@ pub fn count_seats(map: &str) -> u32 {
         .count();
 
     occupied_seats as u32
-}
-
-fn is_same_field(field1: &Field, field2: &Field) -> bool {
-    for (y, row1) in field1.iter().enumerate() {
-        for (x, cell1) in row1.iter().enumerate() {
-            let cell2 = get_field_cell(field2, Position(x as isize, y as isize));
-            if Some(cell1) != cell2 {
-                return false;
-            }
-        }
-    }
-
-    true
 }
 
 fn next_state(field: &Field) -> Field {
