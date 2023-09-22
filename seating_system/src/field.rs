@@ -20,7 +20,7 @@ impl Cell {
 pub struct Field(Vec<Vec<Cell>>);
 
 #[derive(Debug, PartialEq)]
-pub struct Position(isize, isize);
+pub struct Position(pub isize, pub isize);
 
 impl Field {
     pub fn from_map(map: &str) -> Self {
