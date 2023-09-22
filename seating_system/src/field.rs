@@ -21,11 +21,11 @@ pub struct Field(Vec<Vec<Cell>>);
 
 impl Field {
     pub fn from_map(map: &str) -> Self {
-        Self(
-            map.split("\n")
-                .map(|line| line.chars().map(Cell::from_character).collect())
-                .collect(),
-        )
+        Self(map.split("\n").map(Self::from_line).collect())
+    }
+
+    fn from_line(line: &str) -> Vec<Cell> {
+        line.chars().map(Cell::from_character).collect()
     }
 }
 
