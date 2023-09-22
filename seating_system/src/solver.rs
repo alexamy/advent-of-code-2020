@@ -1,7 +1,5 @@
 use crate::field::{self, Cell, Field};
 
-struct Position(isize, isize);
-
 pub fn count_seats(map: &str) -> u32 {
     let mut current_field = field::convert_field(map);
     let mut next_field = current_field;
@@ -84,12 +82,6 @@ fn next_state_for_cell(field: &Field, position: Position) -> Cell {
     };
 
     cell_state
-}
-
-fn get_field_cell(field: &Field, position: Position) -> Option<&Cell> {
-    let Position(x, y) = position;
-
-    field.get(y as usize).and_then(|row| row.get(x as usize))
 }
 
 #[cfg(test)]
