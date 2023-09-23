@@ -5,6 +5,17 @@ enum Direction {
     West,
 }
 
+impl Direction {
+    pub fn turn_clockwise(&self) -> Direction {
+        match self {
+            Direction::North => Direction::East,
+            Direction::East => Direction::South,
+            Direction::South => Direction::West,
+            Direction::West => Direction::North,
+        }
+    }
+}
+
 struct Position {
     x: i32,
     y: i32,
@@ -70,16 +81,7 @@ impl Turtle {
     fn rotate(&mut self, angle: i32) {
         let amount = angle / 90;
         for _ in 0..amount {
-            self.direction = Self::turn_clockwise(&self.direction);
-        }
-    }
-
-    fn turn_clockwise(direction: &Direction) -> Direction {
-        match direction {
-            Direction::North => Direction::East,
-            Direction::East => Direction::South,
-            Direction::South => Direction::West,
-            Direction::West => Direction::North,
+            self.direction = self.direction.turn_clockwise();
         }
     }
 }
