@@ -48,7 +48,7 @@ impl Position {
     }
 }
 
-enum Directive {
+pub enum Directive {
     North(i32),
     East(i32),
     South(i32),
@@ -78,7 +78,7 @@ impl Directive {
     }
 }
 
-struct Turtle {
+pub struct Turtle {
     direction: Direction,
     position: Position,
 }
