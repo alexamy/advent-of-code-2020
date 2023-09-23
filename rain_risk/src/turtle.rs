@@ -1,3 +1,4 @@
+#[derive(Copy, Clone)]
 enum Direction {
     North,
     East,
@@ -6,7 +7,18 @@ enum Direction {
 }
 
 impl Direction {
-    pub fn turn_clockwise(&self) -> Direction {
+    pub fn rotate(&self, angle: i32) -> Self {
+        let amount = angle / 90;
+        let mut direction = self.clone();
+
+        for _ in 0..amount {
+            direction = direction.turn_clockwise();
+        }
+
+        direction
+    }
+
+    fn turn_clockwise(&self) -> Self {
         match self {
             Direction::North => Direction::East,
             Direction::East => Direction::South,
@@ -51,6 +63,26 @@ enum Directive {
     Forward(i32),
 }
 
+impl Directive {
+    pub fn from_string(line: &str) -> Self {
+        let name = &line[0..1];
+        let directive = match name {
+            "N" => Directive::North,
+            "E" => Directive::East,
+            "S" => Directive::South,
+            "W" => Directive::West,
+            "R" => Directive::Right,
+            "L" => Directive::Left,
+            "F" => Directive::Forward,
+            d => panic!("Unknown directive: {}", d),
+        };
+
+        let amount = &line[1..].parse::<i32>().expect("Expect numerical amount");
+
+        directive(*amount)
+    }
+}
+
 impl Turtle {
     pub fn new() -> Self {
         Self {
@@ -79,10 +111,7 @@ impl Turtle {
     }
 
     fn rotate(&mut self, angle: i32) {
-        let amount = angle / 90;
-        for _ in 0..amount {
-            self.direction = self.direction.turn_clockwise();
-        }
+        self.direction = self.direction.rotate(angle);
     }
 }
 
