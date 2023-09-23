@@ -1,7 +1,7 @@
-use crate::field::{self, Cell, Field};
+use crate::field::{self, Cell, Field, Position};
 
 pub fn count_seats(map: &str) -> u32 {
-    let mut current_field = field::convert_field(map);
+    let mut current_field = Field::from_map(map);
     let mut next_field = current_field;
 
     loop {
@@ -14,9 +14,10 @@ pub fn count_seats(map: &str) -> u32 {
     }
 
     let occupied_seats = current_field
+        .cells()
         .into_iter()
         .flatten()
-        .filter(|cell| cell == &Cell::Occupied)
+        .filter(|cell| *cell == &Cell::Occupied)
         .count();
 
     occupied_seats as u32
@@ -25,7 +26,7 @@ pub fn count_seats(map: &str) -> u32 {
 fn next_state(field: &Field) -> Field {
     let mut result = Vec::new();
 
-    for (y, row) in field.iter().enumerate() {
+    for (y, row) in field.cells().iter().enumerate() {
         let mut next_row = Vec::new();
 
         for (x, _) in row.iter().enumerate() {
@@ -36,7 +37,7 @@ fn next_state(field: &Field) -> Field {
         result.push(next_row);
     }
 
-    result
+    Field(result)
 }
 
 fn next_state_for_cell(field: &Field, position: Position) -> Cell {

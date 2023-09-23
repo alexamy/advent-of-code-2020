@@ -34,6 +34,12 @@ impl Field {
         vec.get(y as usize).and_then(|row| row.get(x as usize))
     }
 
+    pub fn cells(&self) -> Iterator<Item = Vec<Vec<Cell>>> {
+        let Field(vec) = self;
+
+        vec.iter()
+    }
+
     fn from_line(line: &str) -> Vec<Cell> {
         line.chars().map(Cell::from_character).collect()
     }
