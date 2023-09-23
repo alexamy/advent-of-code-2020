@@ -5,7 +5,7 @@ use crate::{
 
 pub fn solve() -> i32 {
     let input = Input::read();
-    let directives = input.lines().into_iter().map(Directive::from_string);
+    let directives = input.lines().map(Directive::from_string);
 
     let mut turtle = Turtle::new();
     for directive in directives {

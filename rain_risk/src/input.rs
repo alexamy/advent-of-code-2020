@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, slice::Iter};
 
 pub struct Input(String);
 
@@ -17,9 +17,9 @@ impl Input {
         input
     }
 
-    pub fn lines(&self) -> Vec<&str> {
+    pub fn lines(&self) -> impl Iterator<Item = &str> {
         let Input(input) = self;
 
-        input.split("\n").filter(|line| !line.is_empty()).collect()
+        input.split("\n").filter(|line| !line.is_empty())
     }
 }
