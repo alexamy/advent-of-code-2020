@@ -1,5 +1,5 @@
 use crate::{
-    reader::Input,
+    input::Input,
     turtle::{Directive, Turtle},
 };
 
