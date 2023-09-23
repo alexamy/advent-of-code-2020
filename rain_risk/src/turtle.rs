@@ -14,6 +14,15 @@ impl Direction {
             Direction::West => Direction::North,
         }
     }
+
+    pub fn as_directive(&self, amount: i32) -> Directive {
+        match self {
+            Direction::East => Directive::East(amount),
+            Direction::West => Directive::West(amount),
+            Direction::North => Directive::North(amount),
+            Direction::South => Directive::South(amount),
+        }
+    }
 }
 
 struct Position {
@@ -59,7 +68,7 @@ impl Turtle {
             Directive::Right(n) => self.rotate(n),
             Directive::Left(n) => self.rotate(360 - n),
             Directive::Forward(n) => {
-                let forward = Self::get_forward_directive(&self.direction, n);
+                let forward = self.direction.as_directive(n);
                 self.go(forward);
             }
         }
@@ -67,15 +76,6 @@ impl Turtle {
 
     pub fn distance(&self) -> i32 {
         self.position.distance()
-    }
-
-    fn get_forward_directive(direction: &Direction, amount: i32) -> Directive {
-        match direction {
-            Direction::East => Directive::East(amount),
-            Direction::West => Directive::West(amount),
-            Direction::North => Directive::North(amount),
-            Direction::South => Directive::South(amount),
-        }
     }
 
     fn rotate(&mut self, angle: i32) {
