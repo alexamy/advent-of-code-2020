@@ -1,14 +1,11 @@
 use crate::{
-    reader,
+    reader::Input,
     turtle::{Directive, Turtle},
 };
 
 pub fn solve() -> i32 {
-    let input = reader::read_input();
-    let directives = input
-        .split("\n")
-        .filter(|line| !line.is_empty())
-        .map(Directive::from_string);
+    let input = Input::read();
+    let directives = input.lines().into_iter().map(Directive::from_string);
 
     let mut turtle = Turtle::new();
     for directive in directives {
