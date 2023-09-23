@@ -83,3 +83,26 @@ impl Turtle {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn is_at_destination() {
+        let mut turtle = Turtle::new();
+        let directives = vec![
+            Directive::Forward(10),
+            Directive::North(3),
+            Directive::Forward(7),
+            Directive::Right(90),
+            Directive::Forward(11),
+        ];
+
+        for directive in directives {
+            turtle.go(directive);
+        }
+
+        assert_eq!(turtle.distance(), 25);
+    }
+}
