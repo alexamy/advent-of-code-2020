@@ -10,6 +10,12 @@ struct Position {
     y: i32,
 }
 
+impl Position {
+    pub fn distance(&self) -> i32 {
+        self.x.abs() + self.y.abs()
+    }
+}
+
 struct Turtle {
     direction: Direction,
     position: Position,
@@ -46,6 +52,10 @@ impl Turtle {
                 self.go(forward);
             }
         }
+    }
+
+    pub fn distance(&self) -> i32 {
+        self.position.distance()
     }
 
     fn get_forward_directive(direction: &Direction, amount: i32) -> Directive {
