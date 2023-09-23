@@ -48,11 +48,6 @@ impl Position {
     }
 }
 
-struct Turtle {
-    direction: Direction,
-    position: Position,
-}
-
 enum Directive {
     North(i32),
     East(i32),
@@ -81,6 +76,11 @@ impl Directive {
 
         directive(*amount)
     }
+}
+
+struct Turtle {
+    direction: Direction,
+    position: Position,
 }
 
 impl Turtle {
